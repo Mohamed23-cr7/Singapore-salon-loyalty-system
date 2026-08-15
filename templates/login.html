@@ -6,36 +6,65 @@
     <meta charset="UTF-8">
 
     <meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+          content="width=device-width, initial-scale=1.0">
 
     <title>Staff Login | Singapore Salon</title>
 
+    <!-- Browser Tab Logo -->
+    <link rel="icon"
+          type="image/jpeg"
+          href="{{ url_for('static', filename='images/hs_logo.jpg') }}">
+
+    <!-- Main CSS -->
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
 
 </head>
 
-<body>
 
-<div class="login-page">
+<body class="login-body">
 
-    <div class="login-card">
+
+<div class="premium-login-page">
+
+
+    <div class="premium-login-card glass-panel">
+
+
+        <!-- LOGO -->
 
         <div class="login-brand">
-            HS SINGAPORE
-            <span>SALON</span>
+
+          
+
         </div>
 
+
+        <!-- TITLE -->
+
         <p class="login-small-title">
+
             STAFF PORTAL
+
         </p>
 
-        <h1>Welcome Back</h1>
+
+        <h1>
+
+            Welcome Back
+
+        </h1>
+
 
         <p class="login-description">
+
             Sign in to manage customer loyalty rewards.
+
         </p>
 
+
+
+        <!-- FLASH MESSAGES -->
 
         {% with messages = get_flashed_messages(with_categories=true) %}
 
@@ -44,7 +73,9 @@
                 {% for category, message in messages %}
 
                     <div class="alert {{ category }}">
+
                         {{ message }}
+
                     </div>
 
                 {% endfor %}
@@ -54,38 +85,67 @@
         {% endwith %}
 
 
-        <form method="POST">
+
+        <!-- LOGIN FORM -->
+
+        <form method="POST"
+              class="premium-login-form">
+
+
+            <!-- CSRF SECURITY -->
 
             <input
-               type="hidden"
-               name="csrf_token"
-               value="{{ csrf_token() }}">
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}">
+
+
+
+            <!-- USERNAME -->
 
             <div class="form-group">
 
-                <label>Username</label>
+                <label for="username">
+
+                    Username
+
+                </label>
 
                 <input
                     type="text"
+                    id="username"
                     name="username"
                     placeholder="Enter username"
+                    autocomplete="username"
                     required>
 
             </div>
 
+
+
+            <!-- PASSWORD -->
 
             <div class="form-group">
 
-                <label>Password</label>
+                <label for="password">
+
+                    Password
+
+                </label>
 
                 <input
                     type="password"
+                    id="password"
                     name="password"
                     placeholder="Enter password"
+                    autocomplete="current-password"
                     required>
 
             </div>
 
+
+
+            <!-- LOGIN BUTTON -->
 
             <button
                 type="submit"
@@ -95,8 +155,12 @@
 
             </button>
 
+
         </form>
 
+
+
+        <!-- BACK HOME -->
 
         <a href="{{ url_for('home') }}"
            class="back-home">
@@ -105,9 +169,24 @@
 
         </a>
 
+
+
+        <!-- SECURITY NOTE -->
+
+        <div class="login-security-note">
+
+            <span>◆</span>
+
+            Authorized Salon Staff Only
+
+        </div>
+
+
     </div>
 
+
 </div>
+
 
 </body>
 

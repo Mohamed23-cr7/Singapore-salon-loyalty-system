@@ -2789,3 +2789,1338 @@ body {
         min-height: 44px;
     }
 }
+
+/* =========================================================
+   HS SALON BRANDING
+========================================================= */
+
+.sidebar-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 15px 10px;
+
+    margin-bottom: 10px;
+
+    border-bottom: 1px solid #262626;
+}
+
+.sidebar-logo-image {
+    width: 80px;
+    height: 80px;
+
+    object-fit: contain;
+
+    display: block;
+    margin: 0 auto;
+
+    border-radius: 8px;
+}
+
+.mobile-brand img {
+    display: block;
+    width: 90px;
+    height: auto;
+    object-fit: contain;
+}
+
+.home-body {
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.60),
+            rgba(0, 0, 0, 0.88)
+        ),
+        
+
+}
+
+
+/* =========================================================
+   INDEX + LOGIN PREMIUM BACKGROUND
+========================================================= */
+
+.home-body,
+.login-body {
+    min-height: 100vh;
+    margin: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.35),
+            rgba(0, 0, 0, 0.55)
+        ),
+        url("../images/hs_background.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    font-family: Arial, sans-serif;
+}
+
+
+/* =========================================================
+   GLASS EFFECT
+========================================================= */
+
+.glass-panel {
+    background: rgba(8, 8, 8, 0.58);
+
+    border: 1px solid rgba(224, 183, 76, 0.35);
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+
+/* =========================================================
+   RESPONSIVE BACKGROUND
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .home-body,
+    .login-body {
+        background-position: center center;
+        background-attachment: scroll;
+    }
+
+    .glass-panel {
+        border-radius: 16px;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+}
+/* =========================================================
+   FINAL SIDEBAR + BRANDING OVERRIDES
+   Keep this block LAST in the file.
+========================================================= */
+
+/* Desktop / laptop sidebar: always fit the viewport */
+.sidebar {
+    height: 100vh;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #5d4820 #080808;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #080808;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #5d4820;
+    border-radius: 10px;
+}
+
+/* Compact logo area */
+.sidebar-logo {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 6px 12px;
+    margin: 0 0 12px;
+    border-bottom: 1px solid #262626;
+}
+
+.sidebar-logo-image {
+    display: block;
+    width: 68px;
+    height: 68px;
+    max-width: 68px;
+    object-fit: contain;
+    margin: 0 auto;
+    border-radius: 8px;
+}
+
+/* Navigation gets the flexible middle area */
+.sidebar-nav {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin-top: 8px;
+}
+
+.sidebar-nav a {
+    padding-top: 9px;
+    padding-bottom: 9px;
+    margin-bottom: 3px;
+    line-height: 1.25;
+}
+
+/* Account + logout stay available at the bottom */
+.sidebar-bottom {
+    flex: 0 0 auto;
+    margin-top: auto;
+    padding-top: 12px;
+    padding-bottom: 8px;
+    border-top: 1px solid #262626;
+    background: #050505;
+}
+
+.sidebar-logout {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+/* Slightly tighter sidebar on shorter laptop screens */
+@media (min-width: 769px) and (max-height: 800px) {
+    .sidebar {
+        padding-top: 14px;
+        padding-bottom: 10px;
+    }
+
+    .sidebar-logo {
+        padding-top: 4px;
+        padding-bottom: 8px;
+        margin-bottom: 7px;
+    }
+
+    .sidebar-logo-image {
+        width: 58px;
+        height: 58px;
+        max-width: 58px;
+    }
+
+    .sidebar-nav {
+        margin-top: 4px;
+    }
+
+    .sidebar-nav a {
+        padding-top: 7px;
+        padding-bottom: 7px;
+        margin-bottom: 2px;
+        font-size: 12px;
+    }
+
+    .sidebar-bottom {
+        padding-top: 8px;
+        padding-bottom: 5px;
+    }
+
+    .logged-user strong {
+        font-size: 12px;
+    }
+
+    .logged-user span,
+    .sidebar-logout {
+        font-size: 11px;
+    }
+}
+
+/* Mobile drawer rules must win over desktop sidebar rules */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+        position: fixed;
+        top: 68px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 68px);
+        min-height: 0;
+        padding: 18px;
+        overflow-y: auto;
+        z-index: 1999;
+    }
+
+    .sidebar.mobile-open {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar .sidebar-logo {
+        display: none;
+    }
+
+    .sidebar-nav {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 0;
+        gap: 5px;
+        overflow: visible;
+    }
+
+    .sidebar-nav a {
+        width: 100%;
+        padding: 12px 14px;
+        margin-bottom: 0;
+        white-space: normal;
+        font-size: 14px;
+    }
+
+    .sidebar-bottom {
+        width: 100%;
+        margin-top: auto;
+        padding-top: 14px;
+    }
+}
+
+/* ========================================================================
+   FINAL UI OVERRIDES — HS SINGAPORE SALON
+   Keep this section at the VERY END of style.css.
+   It intentionally uses page-scoped selectors so the Home, Login and
+   Dashboard/Sidebar layouts do not interfere with each other.
+======================================================================== */
+
+
+/* ========================================================================
+   1. GLOBAL SAFETY
+======================================================================== */
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+}
+
+
+/* ========================================================================
+   2. HOME / INDEX PAGE
+   Applies only when: <body class="home-body">
+======================================================================== */
+
+body.home-body {
+    min-height: 100vh;
+    margin: 0;
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.55),
+            rgba(0, 0, 0, 0.28) 45%,
+            rgba(0, 0, 0, 0.48)
+        ),
+        url("../images/hs_background.png");
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+/* Home navigation */
+
+body.home-body .home-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 1000;
+
+    min-height: 76px;
+    height: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 5%;
+
+    background: rgba(4, 4, 4, 0.76);
+    border-bottom: 1px solid rgba(212, 175, 85, 0.35);
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+body.home-body .home-logo-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0;
+    padding: 0;
+
+    text-decoration: none;
+}
+
+body.home-body .home-logo {
+    display: block;
+
+    width: 68px;
+    height: 68px;
+
+    object-fit: contain;
+
+    border-radius: 50%;
+    border: 1px solid rgba(212, 175, 85, 0.35);
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.45);
+}
+
+body.home-body .home-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+body.home-body .home-nav a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 40px;
+
+    margin: 0;
+    padding: 9px 15px;
+
+    color: #dddddd;
+    text-decoration: none;
+
+    border-radius: 7px;
+
+    font-size: 13px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+body.home-body .home-nav a:hover,
+body.home-body .home-nav a.active {
+    color: #e2bd57;
+    background: rgba(212, 175, 85, 0.10);
+}
+
+body.home-body .home-nav .login-btn {
+    color: #e2bd57;
+    border: 1px solid rgba(212, 175, 85, 0.75);
+}
+
+body.home-body .home-nav .login-btn:hover {
+    color: #080808;
+    background: #d4af55;
+}
+
+
+/* Home hero */
+
+body.home-body .home-hero {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 115px 24px 42px;
+}
+
+body.home-body .hero-content.glass-panel {
+    width: min(92vw, 760px);
+    max-width: 760px;
+
+    margin: 0 auto;
+    padding: 38px 42px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(11, 10, 8, 0.77),
+            rgba(4, 4, 4, 0.70)
+        );
+
+    border: 1px solid rgba(212, 175, 85, 0.42);
+    border-radius: 22px;
+
+    box-shadow:
+        0 28px 80px rgba(0, 0, 0, 0.62),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+    backdrop-filter: blur(17px);
+    -webkit-backdrop-filter: blur(17px);
+}
+
+body.home-body .hero-content .small-title {
+    margin: 0 0 13px;
+
+    color: #d9b653;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    letter-spacing: 4px;
+}
+
+body.home-body .hero-content h1 {
+    margin: 0;
+
+    color: #ddb84f;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(42px, 5vw, 62px);
+    line-height: 1.05;
+}
+
+body.home-body .hero-content h2 {
+    margin: 14px 0 0;
+
+    color: #ffffff;
+
+    font-size: clamp(20px, 2vw, 27px);
+    font-weight: 500;
+}
+
+body.home-body .hero-content .description {
+    max-width: 620px;
+
+    margin: 22px auto 28px;
+
+    color: #d0d0d0;
+
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+
+/* Home reward cards */
+
+body.home-body .rewards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+
+    margin: 0 0 28px;
+}
+
+body.home-body .reward-card {
+    width: 100%;
+
+    padding: 22px 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18, 18, 18, 0.92),
+            rgba(7, 7, 7, 0.92)
+        );
+
+    border: 1px solid rgba(212, 175, 85, 0.55);
+    border-radius: 12px;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+}
+
+body.home-body .reward-number {
+    margin-bottom: 4px;
+
+    color: #ddb84f;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 34px;
+    font-weight: 700;
+}
+
+body.home-body .reward-card h3 {
+    margin: 0 0 8px;
+
+    color: #ffffff;
+
+    font-size: 16px;
+}
+
+body.home-body .reward-card p {
+    margin: 0;
+
+    color: #bcbcbc;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+body.home-body .hero-actions {
+    display: flex;
+    justify-content: center;
+}
+
+body.home-body .hero-actions .primary-btn {
+    min-width: 170px;
+
+    padding: 13px 24px;
+
+    border-radius: 7px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e1bc57,
+            #bd902e
+        );
+
+    color: #080808;
+    text-decoration: none;
+
+    font-weight: 700;
+
+    box-shadow: 0 8px 24px rgba(212, 175, 85, 0.18);
+}
+
+body.home-body .home-footer-note {
+    margin: 20px 0 0;
+
+    color: #898989;
+
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+
+/* ========================================================================
+   3. LOGIN PAGE
+   Applies only when: <body class="login-body">
+======================================================================== */
+
+body.login-body {
+    min-height: 100vh;
+    margin: 0;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.42),
+            rgba(0, 0, 0, 0.68)
+        ),
+        url("../images/hs_background.png");
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+body.login-body .premium-login-page {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 32px 18px;
+}
+
+body.login-body .premium-login-card {
+    width: min(92vw, 440px);
+    max-width: 440px;
+
+    margin: 0 auto;
+    padding: 30px 34px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(10, 9, 7, 0.78),
+            rgba(4, 4, 4, 0.72)
+        );
+
+    border: 1px solid rgba(212, 175, 85, 0.46);
+    border-radius: 20px;
+
+    box-shadow:
+        0 28px 80px rgba(0, 0, 0, 0.65),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+body.login-body .login-brand {
+    display: flex;
+    justify-content: center;
+
+    margin: 0 0 15px;
+}
+
+body.login-body .login-logo {
+    display: block;
+
+    width: 94px;
+    height: 94px;
+
+    object-fit: contain;
+
+    border-radius: 50%;
+    border: 1px solid rgba(212, 175, 85, 0.28);
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+body.login-body .login-small-title {
+    margin: 0 0 8px;
+
+    color: #d4af55;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    letter-spacing: 4px;
+}
+
+body.login-body .premium-login-card h1 {
+    margin: 0 0 8px;
+
+    color: #ffffff;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 33px;
+    line-height: 1.1;
+}
+
+body.login-body .login-description {
+    margin: 0 0 24px;
+
+    color: #aaaaaa;
+
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+body.login-body .premium-login-form {
+    width: 100%;
+
+    text-align: left;
+}
+
+body.login-body .premium-login-form .form-group {
+    width: 100%;
+
+    margin-bottom: 15px;
+}
+
+body.login-body .premium-login-form label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #d4af55;
+
+    font-size: 12px;
+}
+
+body.login-body .premium-login-form input[type="text"],
+body.login-body .premium-login-form input[type="password"] {
+    display: block;
+
+    width: 100%;
+    height: 45px;
+
+    padding: 0 13px;
+
+    background: rgba(2, 2, 2, 0.76);
+
+    border: 1px solid #363636;
+    border-radius: 7px;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+body.login-body .premium-login-form input[type="text"]:focus,
+body.login-body .premium-login-form input[type="password"]:focus {
+    border-color: #d4af55;
+
+    box-shadow: 0 0 0 3px rgba(212, 175, 85, 0.09);
+}
+
+body.login-body .premium-login-form .login-submit {
+    width: 100%;
+    min-height: 45px;
+
+    margin-top: 3px;
+
+    border: 0;
+    border-radius: 7px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e1bc57,
+            #bd902e
+        );
+
+    color: #080808;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+body.login-body .premium-login-form .login-submit:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #f0cf78,
+            #d4af55
+        );
+}
+
+body.login-body .premium-login-card .back-home {
+    display: inline-block;
+
+    margin-top: 18px;
+
+    color: #aaaaaa;
+    text-decoration: none;
+
+    font-size: 12px;
+}
+
+body.login-body .premium-login-card .back-home:hover {
+    color: #d4af55;
+}
+
+body.login-body .login-security-note {
+    margin-top: 20px;
+    padding-top: 14px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+    color: #777777;
+
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+body.login-body .login-security-note span {
+    color: #d4af55;
+}
+
+
+/* ========================================================================
+   4. ADMIN / STAFF SIDEBAR
+   Applies only inside .dashboard-layout
+======================================================================== */
+
+.dashboard-layout > .sidebar {
+    width: 236px;
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    z-index: 1200;
+
+    display: flex;
+    flex-direction: column;
+
+    height: 100vh;
+
+    padding: 16px 14px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background:
+        linear-gradient(
+            180deg,
+            #060606 0%,
+            #040404 100%
+        );
+
+    border-right: 1px solid rgba(212, 175, 85, 0.48);
+
+    scrollbar-width: thin;
+    scrollbar-color: #4a3a18 transparent;
+}
+
+.dashboard-layout > .sidebar .sidebar-logo {
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 88px;
+
+    margin: 0;
+    padding: 5px 0 14px;
+
+    border-bottom: 1px solid #252525;
+}
+
+.dashboard-layout > .sidebar .sidebar-logo-image {
+    display: block;
+
+    width: 72px;
+    height: 72px;
+    max-width: 72px;
+
+    margin: 0 auto;
+
+    object-fit: contain;
+
+    border-radius: 50%;
+    border: 1px solid rgba(212, 175, 85, 0.30);
+
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.40);
+}
+
+.dashboard-layout > .sidebar .sidebar-nav {
+    flex: 1 1 auto;
+
+    min-height: 0;
+
+    margin: 12px 0 8px;
+
+    padding: 0;
+
+    overflow-y: auto;
+}
+
+.dashboard-layout > .sidebar .sidebar-nav a {
+    display: flex;
+    align-items: center;
+
+    min-height: 38px;
+
+    margin: 0 0 3px;
+    padding: 9px 12px;
+
+    color: #bbbbbb;
+    text-decoration: none;
+
+    border-left: 3px solid transparent;
+    border-radius: 7px;
+
+    font-size: 13px;
+    line-height: 1.2;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.dashboard-layout > .sidebar .sidebar-nav a:hover {
+    color: #e4bc54;
+
+    background: rgba(212, 175, 85, 0.07);
+}
+
+.dashboard-layout > .sidebar .sidebar-nav a.active {
+    color: #e4bc54;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(212, 175, 85, 0.15),
+            rgba(212, 175, 85, 0.04)
+        );
+
+    border-left-color: #d4af55;
+}
+
+.dashboard-layout > .sidebar .sidebar-bottom {
+    flex: 0 0 auto;
+
+    margin-top: auto;
+    padding: 12px 4px 2px;
+
+    border-top: 1px solid #252525;
+}
+
+.dashboard-layout > .sidebar .logged-user strong {
+    display: block;
+
+    color: #ffffff;
+
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.dashboard-layout > .sidebar .logged-user span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #d4af55;
+
+    font-size: 10px;
+}
+
+.dashboard-layout > .sidebar .sidebar-logout {
+    display: inline-block;
+
+    margin-top: 10px;
+
+    color: #c6c6c6;
+    text-decoration: none;
+
+    font-size: 12px;
+}
+
+.dashboard-layout > .sidebar .sidebar-logout:hover {
+    color: #d4af55;
+}
+
+
+/* Main content aligned to final sidebar */
+
+.dashboard-layout > .dashboard-main {
+    width: calc(100% - 236px);
+
+    margin-left: 236px;
+
+    padding: 34px 30px 42px;
+}
+
+
+/* ========================================================================
+   5. LAPTOP HEIGHT OPTIMISATION
+======================================================================== */
+
+@media (min-width: 769px) and (max-height: 760px) {
+
+    .dashboard-layout > .sidebar {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .dashboard-layout > .sidebar .sidebar-logo {
+        min-height: 70px;
+
+        padding-top: 2px;
+        padding-bottom: 9px;
+    }
+
+    .dashboard-layout > .sidebar .sidebar-logo-image {
+        width: 56px;
+        height: 56px;
+        max-width: 56px;
+    }
+
+    .dashboard-layout > .sidebar .sidebar-nav {
+        margin-top: 7px;
+        margin-bottom: 6px;
+    }
+
+    .dashboard-layout > .sidebar .sidebar-nav a {
+        min-height: 32px;
+
+        margin-bottom: 1px;
+        padding-top: 6px;
+        padding-bottom: 6px;
+
+        font-size: 12px;
+    }
+
+    .dashboard-layout > .sidebar .sidebar-bottom {
+        padding-top: 8px;
+    }
+
+    .dashboard-layout > .sidebar .sidebar-logout {
+        margin-top: 6px;
+    }
+}
+
+
+/* ========================================================================
+   6. TABLET
+======================================================================== */
+
+@media (min-width: 769px) and (max-width: 1100px) {
+
+    .dashboard-layout > .sidebar {
+        width: 205px;
+
+        padding-left: 11px;
+        padding-right: 11px;
+    }
+
+    .dashboard-layout > .dashboard-main {
+        width: calc(100% - 205px);
+
+        margin-left: 205px;
+
+        padding: 28px 20px 38px;
+    }
+
+    .dashboard-layout > .sidebar .sidebar-logo-image {
+        width: 62px;
+        height: 62px;
+        max-width: 62px;
+    }
+
+    .dashboard-layout > .sidebar .sidebar-nav a {
+        padding-left: 10px;
+        padding-right: 10px;
+
+        font-size: 12px;
+    }
+}
+
+
+/* ========================================================================
+   7. MOBILE DRAWER
+   Requires .mobile-header and .sidebar.mobile-open in the HTML/JS.
+======================================================================== */
+
+@media (max-width: 768px) {
+
+    .mobile-header {
+        display: flex;
+
+        position: sticky;
+        top: 0;
+
+        z-index: 2200;
+
+        width: 100%;
+        min-height: 64px;
+
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 8px 14px;
+
+        background: rgba(4, 4, 4, 0.96);
+
+        border-bottom: 1px solid rgba(212, 175, 85, 0.32);
+    }
+
+    .mobile-brand img {
+        display: block;
+
+        width: 48px;
+        height: 48px;
+
+        object-fit: contain;
+
+        border-radius: 50%;
+    }
+
+    .mobile-menu-btn {
+        width: 42px;
+        height: 42px;
+
+        border: 1px solid #4d3c18;
+        border-radius: 7px;
+
+        background: #0d0d0d;
+
+        color: #d4af55;
+
+        font-size: 20px;
+    }
+
+    .dashboard-layout > .sidebar {
+        display: none;
+
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        z-index: 2100;
+
+        width: 100%;
+        height: calc(100vh - 64px);
+
+        padding: 14px 16px 18px;
+
+        background: rgba(5, 5, 5, 0.99);
+
+        border-right: 0;
+        border-top: 1px solid #242424;
+    }
+
+    .dashboard-layout > .sidebar.mobile-open {
+        display: flex;
+    }
+
+    .dashboard-layout > .sidebar .sidebar-logo {
+        display: none;
+    }
+
+    .dashboard-layout > .sidebar .sidebar-nav {
+        width: 100%;
+
+        margin-top: 0;
+
+        overflow-y: auto;
+    }
+
+    .dashboard-layout > .sidebar .sidebar-nav a {
+        width: 100%;
+        min-height: 43px;
+
+        margin-bottom: 4px;
+        padding: 11px 13px;
+
+        font-size: 13px;
+    }
+
+    .dashboard-layout > .dashboard-main {
+        width: 100%;
+
+        margin-left: 0;
+
+        padding: 22px 14px 38px;
+    }
+
+    body.home-body .home-navbar {
+        position: relative;
+
+        flex-direction: column;
+
+        gap: 8px;
+
+        padding: 10px 14px;
+    }
+
+    body.home-body .home-logo {
+        width: 58px;
+        height: 58px;
+    }
+
+    body.home-body .home-nav {
+        width: 100%;
+
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    body.home-body .home-nav a {
+        min-height: 36px;
+
+        padding: 8px 10px;
+
+        font-size: 11px;
+    }
+
+    body.home-body .home-hero {
+        min-height: auto;
+
+        padding: 24px 12px 34px;
+    }
+
+    body.home-body .hero-content.glass-panel {
+        width: 100%;
+
+        padding: 28px 18px;
+
+        border-radius: 17px;
+    }
+
+    body.home-body .rewards {
+        grid-template-columns: 1fr;
+    }
+
+    body.login-body,
+    body.home-body {
+        background-attachment: scroll;
+    }
+
+    body.login-body .premium-login-card {
+        width: min(100%, 390px);
+
+        padding: 26px 20px;
+
+        border-radius: 17px;
+    }
+
+    body.login-body .login-logo {
+        width: 82px;
+        height: 82px;
+    }
+
+    body.login-body .premium-login-card h1 {
+        font-size: 28px;
+    }
+}
+
+
+/* ========================================================================
+   8. SMALL MOBILE
+======================================================================== */
+
+@media (max-width: 420px) {
+
+    body.home-body .hero-content h1 {
+        font-size: 36px;
+    }
+
+    body.home-body .hero-content h2 {
+        font-size: 19px;
+    }
+
+    body.home-body .hero-content .description {
+        font-size: 12px;
+    }
+
+    body.home-body .reward-card {
+        padding: 18px 14px;
+    }
+
+    .dashboard-layout > .dashboard-main {
+        padding-left: 11px;
+        padding-right: 11px;
+    }
+}
+
+/* Slightly larger sidebar logo */
+
+.dashboard-layout > .sidebar .sidebar-logo {
+    min-height: 104px;
+}
+
+.dashboard-layout > .sidebar .sidebar-logo-image {
+    width: 98px;
+    height: 98px;
+    max-width: 98px;
+}
+@media (min-width: 769px) and (max-height: 760px) {
+
+    .dashboard-layout > .sidebar .sidebar-logo {
+        min-height: 128px;
+    }
+
+    .dashboard-layout > .sidebar .sidebar-logo-image {
+        width: 95px;
+        height: 95px;
+        max-width: 98px;
+    }
+}

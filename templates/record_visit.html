@@ -12,6 +12,10 @@
         Record Visit | Singapore Salon
     </title>
 
+     <link rel="icon"
+      type="image/jpeg"
+      href="{{ url_for('static', filename='images/hs_logo.png') }}">
+
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
 
@@ -31,11 +35,12 @@
 
         <div class="sidebar-logo">
 
-            HS SINGAPORE
+      <img
+        src="{{ url_for('static', filename='images/hs_logo.png') }}"
+        alt="HS Singapore Salon"
+        class="sidebar-logo-image">
 
-            <span>SALON</span>
-
-        </div>
+</div>
 
 
         <nav class="sidebar-nav">

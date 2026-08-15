@@ -12,6 +12,10 @@
         {{ customer.full_name }} | Singapore Salon
     </title>
 
+     <link rel="icon"
+      type="image/jpeg"
+      href="{{ url_for('static', filename='images/hs_logo.png') }}">
+
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
 
@@ -28,10 +32,14 @@
 
     <aside class="sidebar">
 
-        <div class="sidebar-logo">
-            HS SINGAPORE
-            <span>SALON</span>
-        </div>
+       <div class="sidebar-logo">
+
+     <img
+        src="{{ url_for('static', filename='images/hs_logo.png') }}"
+        alt="HS Singapore Salon"
+        class="sidebar-logo-image">
+
+</div>
 
 
         <nav class="sidebar-nav">

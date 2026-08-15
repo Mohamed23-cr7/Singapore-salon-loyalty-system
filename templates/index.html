@@ -2,76 +2,211 @@
 <html lang="en">
 
 <head>
+
+    <meta charset="UTF-8">
+
     <meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+          content="width=device-width, initial-scale=1.0">
 
     <title>Singapore Salon | Loyalty Rewards</title>
 
+    <!-- Browser Tab Logo -->
+    <link rel="icon"
+          type="image/jpeg"
+          href="{{ url_for('static', filename='images/hs_logo.jpg') }}">
+
+    <!-- Main CSS -->
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
+
 </head>
 
-<body>
 
-    <header class="navbar">
+<body class="home-body">
 
-        <div class="logo">
-            HS SINGAPORE
-            <span>SALON</span>
-        </div>
 
-        <nav>
-            <a href="#">Home</a>
-            <a href="#">My Loyalty Card</a>
-            <a href="{{ url_for('login') }}" class="login-btn"> Staff Login</a>
+    <!-- =====================================
+         TOP NAVIGATION
+    ====================================== -->
+
+    <header class="navbar home-navbar">
+
+        <a href="{{ url_for('home') }}"
+           class="home-logo-link">
+
+            <img
+                src="{{ url_for('static', filename='images/hs_logo.png') }}"
+                alt="HS Singapore Salon"
+                class="home-logo">
+
+        </a>
+
+
+        <nav class="home-nav">
+
+            <a href="{{ url_for('home') }}"
+               class="active">
+
+                Home
+
+            </a>
+
+            <a href="#loyalty-program">
+
+                Loyalty Program
+
+            </a>
+
+            <a href="{{ url_for('login') }}"
+               class="login-btn">
+
+                Staff Login
+
+            </a>
+
         </nav>
 
     </header>
 
 
-    <main class="hero">
 
-        <div class="hero-content">
+    <!-- =====================================
+         HERO SECTION
+    ====================================== -->
+
+    <main class="hero home-hero">
+
+
+        <div class="hero-content glass-panel">
+
+
+            <!-- SMALL TITLE -->
 
             <p class="small-title">
+
                 STYLE • BEAUTY • CONFIDENCE
+
             </p>
 
-            <h1>Singapore Salon</h1>
 
-            <h2>Exclusive Loyalty Rewards</h2>
+            <!-- MAIN TITLE -->
+
+            <h1>
+
+                Singapore Salon
+
+            </h1>
+
+
+            <h2>
+
+                Exclusive Loyalty Rewards
+
+            </h2>
+
+
+            <!-- DESCRIPTION -->
 
             <p class="description">
+
                 Every visit brings you closer to something special.
                 Enjoy exclusive rewards created for our valued
                 ladies and gents.
+
             </p>
 
 
-            <div class="rewards">
+
+            <!-- =====================================
+                 REWARD CARDS
+            ====================================== -->
+
+            <div class="rewards"
+                 id="loyalty-program">
+
 
                 <div class="reward-card">
-                    <div class="reward-number">5</div>
-                    <h3>5th Visit</h3>
-                    <p>Enjoy 25% off your service.</p>
+
+                    <div class="reward-number">
+
+                        5
+
+                    </div>
+
+                    <h3>
+
+                        5th Visit
+
+                    </h3>
+
+                    <p>
+
+                        Enjoy 25% off your service.
+
+                    </p>
+
                 </div>
 
+
+
                 <div class="reward-card">
-                    <div class="reward-number">10</div>
-                    <h3>10th Visit</h3>
-                    <p>Receive a complimentary facial.</p>
+
+                    <div class="reward-number">
+
+                        10
+
+                    </div>
+
+                    <h3>
+
+                        10th Visit
+
+                    </h3>
+
+                    <p>
+
+                        Receive a complimentary facial.
+
+                    </p>
+
                 </div>
+
 
             </div>
 
 
-            <a href="#" class="primary-btn">
-                View My Loyalty Card
-            </a>
+
+            <!-- =====================================
+                 STAFF LOGIN BUTTON
+            ====================================== -->
+
+            <div class="hero-actions">
+
+                <a href="{{ url_for('login') }}"
+                   class="primary-btn">
+
+                    Staff Login
+
+                </a>
+
+            </div>
+
+
+            <!-- FOOTER TEXT -->
+
+            <p class="home-footer-note">
+
+                Singapore Salon Loyalty Program
+
+            </p>
+
 
         </div>
 
+
     </main>
 
+
 </body>
+
 </html>

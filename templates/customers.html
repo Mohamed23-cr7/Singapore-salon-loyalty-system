@@ -9,6 +9,10 @@
 
     <title>Customers | Singapore Salon</title>
 
+    <link rel="icon"
+      type="image/jpeg"
+      href="{{ url_for('static', filename='images/hs_logo.jpg') }}">
+
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
 </head>
@@ -23,9 +27,13 @@
     <aside class="sidebar">
 
         <div class="sidebar-logo">
-            HS SINGAPORE
-            <span>SALON</span>
-        </div>
+
+     <img
+        src="{{ url_for('static', filename='images/hs_logo.png') }}"
+        alt="HS Singapore Salon"
+        class="sidebar-logo-image">
+
+</div>
 
         <nav class="sidebar-nav">
 
