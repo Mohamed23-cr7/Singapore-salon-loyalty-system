@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+    <title>
+        My Loyalty Card | Singapore Salon
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body class="public-card-body">
+
+
+<div class="public-card-container">
+
+
+    <!-- BRAND -->
+
+    <div class="public-brand">
+
+        <h1>
+            HS SINGAPORE
+        </h1>
+
+        <span>
+            SALON
+        </span>
+
+        <p>
+            STYLE • BEAUTY • CONFIDENCE
+        </p>
+
+    </div>
+
+
+
+    <!-- CUSTOMER -->
+
+    <div class="public-customer-header">
+
+        <p class="dashboard-small-title">
+            DIGITAL LOYALTY CARD
+        </p>
+
+        <h2>
+            {{ customer.full_name }}
+        </h2>
+
+        <p>
+            {{ customer.loyalty_number }}
+        </p>
+
+    </div>
+
+
+
+    <!-- PROGRESS -->
+
+    <div class="public-progress">
+
+        <strong>
+            {{ customer.current_punches }} / 10
+        </strong>
+
+        <span>
+            VISITS COMPLETED
+        </span>
+
+    </div>
+
+
+
+    <!-- PUNCH CARD -->
+
+    <div class="public-punch-grid">
+
+        {% for number in range(1, 11) %}
+
+        <div class="
+            public-punch
+
+            {% if number <= customer.current_punches %}
+                completed
+            {% endif %}
+
+            {% if number == 5 or number == 10 %}
+                reward
+            {% endif %}
+        ">
+
+            {{ number }}
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+
+    <!-- REWARDS INFORMATION -->
+
+    <div class="public-milestones">
+
+        <div>
+
+            <span>
+                VISIT 5
+            </span>
+
+            <strong>
+                25% OFF
+            </strong>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                VISIT 10
+            </span>
+
+            <strong>
+                FREE FACIAL
+            </strong>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- AVAILABLE REWARDS -->
+
+    {% set available_rewards =
+        rewards
+        |selectattr("status", "equalto", "available")
+        |list
+    %}
+
+
+    {% if available_rewards %}
+
+    <div class="public-rewards">
+
+        <p class="dashboard-small-title">
+            YOUR REWARDS
+        </p>
+
+        {% for reward in available_rewards %}
+
+        <div class="public-reward">
+
+            <span>
+                ★ AVAILABLE
+            </span>
+
+            <strong>
+                {{ reward.reward_type }}
+            </strong>
+
+            <p>
+                Please show this card to salon staff
+                when redeeming your reward.
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% endif %}
+
+
+
+    <!-- SECURITY MESSAGE -->
+
+    <div class="public-card-footer">
+
+        <p>
+            Singapore Salon Loyalty Member
+        </p>
+
+        <span>
+            Rewards can only be recorded or redeemed by
+            authorized salon staff.
+        </span>
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {{ customer.full_name }} | Singapore Salon
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body class="dashboard-body">
+
+
+<div class="dashboard-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            HS SINGAPORE
+            <span>SALON</span>
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="{{ url_for('dashboard') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('customers') }}">
+                Customers
+            </a>
+
+            <a href="{{ url_for('add_customer') }}">
+                Add Customer
+            </a>
+
+            {% if customer.current_punches < 10 %}
+            <a href="{{ url_for('record_visit', customer_id=customer.id) }}">
+                Record Visit
+            </a>
+            {% else %}
+            <a href="#">
+                Record Visit
+            </a>
+            {% endif %}
+
+            <a href="{{ url_for('rewards') }}">
+    Rewards
+</a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="logged-user">
+
+                <strong>
+                    {{ current_user.full_name }}
+                </strong>
+
+                <span>
+                    {{ current_user.role|capitalize }}
+                </span>
+
+            </div>
+
+            <a href="{{ url_for('logout') }}"
+               class="sidebar-logout">
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="dashboard-main">
+
+
+        <!-- FLASH MESSAGES -->
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div class="alert {{ category }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+
+        <!-- PAGE HEADING -->
+
+        <div class="page-heading">
+
+            <p class="dashboard-small-title">
+                CUSTOMER PROFILE
+            </p>
+
+            <h1>
+                {{ customer.full_name }}
+            </h1>
+
+            <p>
+                Loyalty Member {{ customer.loyalty_number }}
+            </p>
+
+        </div>
+
+
+
+        <!-- CUSTOMER + LOYALTY CARD -->
+
+        <div class="profile-grid">
+
+
+            <!-- CUSTOMER DETAILS -->
+
+            <div class="customer-info-card">
+
+                <h2>
+                    Customer Details
+                </h2>
+
+
+                <div class="info-line">
+
+                    <span>
+                        Phone
+                    </span>
+
+                    <strong>
+                        {{ customer.phone }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-line">
+
+                    <span>
+                        Email
+                    </span>
+
+                    <strong>
+                        {{ customer.email or "Not provided" }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-line">
+
+                    <span>
+                        Category
+                    </span>
+
+                    <strong>
+                        {{ customer.gender }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-line">
+
+                    <span>
+                        Loyalty Number
+                    </span>
+
+                    <strong class="gold-text">
+                        {{ customer.loyalty_number }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-line">
+
+                    <span>
+                        Total Progress
+                    </span>
+
+                    <strong>
+                        {{ customer.current_punches }} / 10 Visits
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DIGITAL LOYALTY CARD -->
+
+            <div class="loyalty-card">
+
+                <p class="dashboard-small-title">
+                    DIGITAL LOYALTY CARD
+                </p>
+
+                <h2>
+                    {{ customer.full_name }}
+                </h2>
+
+
+                <div class="punch-counter">
+
+                    {{ customer.current_punches }} / 10 Visits
+
+                </div>
+
+
+                <div class="punch-grid">
+
+                    {% for number in range(1, 11) %}
+
+                    <div class="
+                        punch
+
+                        {% if number <= customer.current_punches %}
+                            completed
+                        {% endif %}
+
+                        {% if number == 5 or number == 10 %}
+                            reward-punch
+                        {% endif %}
+                    ">
+
+                        {{ number }}
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="loyalty-reward-text">
+
+                    <span>
+                        Visit 5 → 25% OFF
+                    </span>
+
+                    <span>
+                        Visit 10 → FREE FACIAL
+                    </span>
+
+                </div>
+
+                <div class="customer-qr-section">
+
+    <div class="qr-image-box">
+
+        <img
+            src="{{ url_for('customer_qr', customer_id=customer.id) }}"
+            alt="Customer Loyalty QR Code">
+
+    </div>
+
+    <div class="qr-details">
+
+        <span>
+            LOYALTY QR
+        </span>
+
+        <strong>
+            Scan to open customer loyalty profile
+        </strong>
+
+        <p>
+            {{ customer.loyalty_number }}
+        </p>
+
+    </div>
+
+</div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PROFILE ACTIONS -->
+
+        <div class="profile-actions">
+
+
+    {% if customer.current_punches < 10 %}
+
+    <a
+        href="{{ url_for('record_visit', customer_id=customer.id) }}"
+        class="dashboard-add-btn"
+        style="text-decoration:none;">
+
+        + Record Visit
+
+    </a>
+
+
+    {% else %}
+
+    <form
+        method="POST"
+        action="{{ url_for('start_new_cycle', customer_id=customer.id) }}">
+
+        <button
+            type="submit"
+            class="new-cycle-btn"
+            onclick="return confirm('Start a new 10-visit loyalty cycle for this customer?');">
+
+            Start New Cycle
+
+        </button>
+
+        <input
+    type="hidden"
+    name="csrf_token"
+    value="{{ csrf_token() }}">
+
+    </form>
+
+    {% endif %}
+
+
+    <a
+        href="{{ url_for('customers') }}"
+        class="cancel-btn">
+
+        Back to Customers
+
+    </a>
+
+
+</div>
+
+
+
+        <!-- =================================
+             VISIT HISTORY
+        ================================== -->
+
+        <section class="visit-history-section">
+
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="dashboard-small-title">
+                        CUSTOMER ACTIVITY
+                    </p>
+
+                    <h2>
+                        Visit History
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="customer-table-card">
+
+
+                {% if visits %}
+
+                <div class="customer-table-wrapper">
+
+                    <table class="customer-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Visit</th>
+
+                                <th>Service</th>
+
+                                <th>Original Price</th>
+
+                                <th>Discount</th>
+
+                                <th>Final Price</th>
+
+                                <th>Staff</th>
+
+                                <th>Date</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                            {% for visit in visits %}
+
+                            <tr>
+
+
+                                <td>
+
+                                    <span class="progress-badge">
+
+                                        #{{ visit.punch_number }}
+
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    {{ visit.service_name }}
+
+                                </td>
+
+
+                                <td>
+
+                                    LKR
+                                    {{ "%.2f"|format(visit.original_price) }}
+
+                                </td>
+
+
+                                <td>
+
+                                    {% if visit.discount_percent > 0 %}
+
+                                    <span class="discount-badge">
+
+                                        {{ visit.discount_percent }}% OFF
+
+                                    </span>
+
+                                    {% else %}
+
+                                    —
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <td class="gold-text">
+
+                                    LKR
+                                    {{ "%.2f"|format(visit.final_price) }}
+
+                                </td>
+
+
+                                <td>
+
+                                    {{ visit.staff.full_name }}
+
+                                </td>
+
+
+                                <td>
+
+                                    {{ visit.visit_date.strftime("%d %b %Y %I:%M %p") }}
+
+                                </td>
+
+
+                            </tr>
+
+                            {% endfor %}
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                {% else %}
+
+
+                <div class="empty-customers">
+
+                    <h3>
+                        No visits recorded
+                    </h3>
+
+                    <p>
+                        This customer has not completed any loyalty visits yet.
+                    </p>
+
+                </div>
+
+
+                {% endif %}
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================
+             REWARDS
+        ================================== -->
+
+        <section
+            class="visit-history-section"
+            id="rewards-section">
+
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="dashboard-small-title">
+                        LOYALTY BENEFITS
+                    </p>
+
+                    <h2>
+                        Rewards
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="rewards-list">
+
+
+                {% if rewards %}
+
+
+                    {% for reward in rewards %}
+
+
+                    <div class="customer-reward-card">
+
+
+                        <div>
+
+                            <span class="reward-status">
+
+                                {{ reward.status|upper }}
+
+                            </span>
+
+
+                            <h3>
+
+                                {{ reward.reward_type }}
+
+                            </h3>
+
+
+                            <p>
+
+                                Earned:
+                                {{ reward.earned_at.strftime("%d %b %Y") }}
+
+                            </p>
+
+
+                            {% if reward.redeemed_at %}
+
+                            <p>
+
+                                Redeemed:
+                                {{ reward.redeemed_at.strftime("%d %b %Y") }}
+
+                            </p>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    {% endfor %}
+
+
+                {% else %}
+
+
+                    <div class="customer-reward-card muted-reward">
+
+                        <h3>
+                            No rewards available yet
+                        </h3>
+
+                        <p>
+                            Complete the loyalty milestones to earn rewards.
+                        </p>
+
+                    </div>
+
+
+                {% endif %}
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+    <title>Staff Login | Singapore Salon</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="login-page">
+
+    <div class="login-card">
+
+        <div class="login-brand">
+            HS SINGAPORE
+            <span>SALON</span>
+        </div>
+
+        <p class="login-small-title">
+            STAFF PORTAL
+        </p>
+
+        <h1>Welcome Back</h1>
+
+        <p class="login-description">
+            Sign in to manage customer loyalty rewards.
+        </p>
+
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div class="alert {{ category }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <form method="POST">
+
+            <input
+               type="hidden"
+               name="csrf_token"
+               value="{{ csrf_token() }}">
+
+            <div class="form-group">
+
+                <label>Username</label>
+
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Enter username"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter password"
+                    required>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="login-submit">
+
+                Sign In
+
+            </button>
+
+        </form>
+
+
+        <a href="{{ url_for('home') }}"
+           class="back-home">
+
+            ← Back to Home
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

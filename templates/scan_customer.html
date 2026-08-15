@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Scan Customer | Singapore Salon</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+</head>
+
+
+<body class="dashboard-body">
+
+<div class="dashboard-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+
+            HS SINGAPORE
+
+            <span>SALON</span>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="{{ url_for('dashboard') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('customers') }}">
+                Customers
+            </a>
+
+            <a href="{{ url_for('add_customer') }}">
+                Add Customer
+            </a>
+
+            <a href="{{ url_for('record_visit_search') }}">
+                Record Visit
+            </a>
+
+            <a href="{{ url_for('scan_customer') }}"
+               class="active">
+                Scan QR
+            </a>
+
+            <a href="{{ url_for('rewards') }}">
+                Rewards
+            </a>
+
+
+            {% if current_user.role == "admin" %}
+
+<a href="{{ url_for('staff_management') }}">
+    Staff Management
+</a>
+
+<a href="{{ url_for('audit_logs') }}">
+    Audit Logs
+</a>
+
+{% endif %}
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="logged-user">
+
+                <strong>
+                    {{ current_user.full_name }}
+                </strong>
+
+                <span>
+                    {{ current_user.role|capitalize }}
+                </span>
+
+            </div>
+
+            <a href="{{ url_for('logout') }}"
+               class="sidebar-logout">
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- MAIN -->
+
+    <main class="dashboard-main">
+
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                <div class="alert {{ category }}">
+                    {{ message }}
+                </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+
+        <div class="page-heading">
+
+            <p class="dashboard-small-title">
+                RECEPTION
+            </p>
+
+            <h1>
+                Scan Customer QR
+            </h1>
+
+            <p>
+                Scan the customer loyalty card to open their profile.
+            </p>
+
+        </div>
+
+
+
+        <div class="scanner-card">
+
+            <div id="reader"></div>
+
+            <div id="scan-status">
+
+                Point the camera at the customer QR code.
+
+            </div>
+
+        </div>
+
+
+
+        <div class="scanner-help">
+
+            <p class="dashboard-small-title">
+                ALTERNATIVE
+            </p>
+
+            <h3>
+                Cannot scan?
+            </h3>
+
+            <p>
+                Search the customer using their phone number
+                or loyalty number instead.
+            </p>
+
+            <a href="{{ url_for('record_visit_search') }}"
+               class="view-customer-btn">
+
+                Search Customer
+
+            </a>
+
+        </div>
+
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+    let scanLocked = false;
+
+
+    function onScanSuccess(decodedText) {
+
+        if (scanLocked) {
+            return;
+        }
+
+        scanLocked = true;
+
+        document.getElementById("scan-status").innerText =
+            "Customer QR detected. Opening profile...";
+
+
+        window.location.href =
+            "{{ url_for('scan_lookup') }}" +
+            "?value=" +
+            encodeURIComponent(decodedText);
+    }
+
+
+    function onScanFailure(error) {
+        // Normal scanning failures are ignored.
+    }
+
+
+    const scanner = new Html5QrcodeScanner(
+        "reader",
+        {
+            fps: 10,
+            qrbox: {
+                width: 250,
+                height: 250
+            }
+        },
+        false
+    );
+
+
+    scanner.render(
+        onScanSuccess,
+        onScanFailure
+    );
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+    <title>Customers | Singapore Salon</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+
+<body class="dashboard-body">
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            HS SINGAPORE
+            <span>SALON</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="{{ url_for('dashboard') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('customers') }}"
+               class="active">
+                Customers
+            </a>
+
+            <a href="{{ url_for('add_customer') }}">
+                Add Customer
+            </a>
+
+            <a href="{{ url_for('scan_customer') }}">
+    Scan QR
+</a>
+
+            <a href="{{ url_for('record_visit_search') }}">
+    Record Visit
+</a>
+
+            <a href="{{ url_for('rewards') }}">
+                Rewards
+            </a>
+
+            {% if current_user.role == "admin" %}
+
+<a href="{{ url_for('staff_management') }}">
+    Staff Management
+</a>
+
+<a href="{{ url_for('audit_logs') }}">
+    Audit Logs
+</a>
+
+{% endif %}
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="logged-user">
+
+                <strong>
+                    {{ current_user.full_name }}
+                </strong>
+
+                <span>
+                    {{ current_user.role|capitalize }}
+                </span>
+
+            </div>
+
+            <a href="{{ url_for('logout') }}"
+               class="sidebar-logout">
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="dashboard-main">
+
+
+        <!-- HEADER -->
+
+        <div class="dashboard-header">
+
+            <div>
+
+                <p class="dashboard-small-title">
+                    CUSTOMER MANAGEMENT
+                </p>
+
+                <h1>
+                    Customers
+                </h1>
+
+                <p>
+                    Search and manage loyalty members.
+                </p>
+
+            </div>
+
+
+            <a href="{{ url_for('add_customer') }}"
+               class="dashboard-add-btn"
+               style="text-decoration:none;">
+
+                + Add Customer
+
+            </a>
+
+        </div>
+
+
+
+        <!-- SEARCH -->
+
+        <div class="customer-search-card">
+
+            <form method="GET"
+                  action="{{ url_for('customers') }}"
+                  class="customer-search-form">
+
+
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ search }}"
+                    placeholder="Search name, phone or loyalty number">
+
+
+                <button type="submit">
+
+                    Search
+
+                </button>
+
+
+                {% if search %}
+
+                <a href="{{ url_for('customers') }}"
+                   class="clear-search-btn">
+
+                    Clear
+
+                </a>
+
+                {% endif %}
+
+            </form>
+
+        </div>
+
+
+
+        <!-- CUSTOMER TABLE -->
+
+        <div class="customer-table-card">
+
+
+            {% if customers %}
+
+
+            <div class="customer-table-wrapper">
+
+                <table class="customer-table">
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Customer</th>
+
+                            <th>Phone</th>
+
+                            <th>Category</th>
+
+                            <th>Loyalty No.</th>
+
+                            <th>Progress</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+
+
+                    <tbody>
+
+
+                        {% for customer in customers %}
+
+
+                        <tr>
+
+
+                            <!-- CUSTOMER NAME -->
+
+                            <td>
+
+                                <strong>
+                                    {{ customer.full_name }}
+                                </strong>
+
+                            </td>
+
+
+
+                            <!-- PHONE -->
+
+                            <td>
+
+                                {{ customer.phone }}
+
+                            </td>
+
+
+
+                            <!-- CATEGORY -->
+
+                            <td>
+
+                                {{ customer.gender }}
+
+                            </td>
+
+
+
+                            <!-- LOYALTY NUMBER -->
+
+                            <td class="gold-text">
+
+                                {{ customer.loyalty_number }}
+
+                            </td>
+
+
+
+                            <!-- PROGRESS -->
+
+                            <td>
+
+                                <span class="progress-badge">
+
+                                    {{ customer.current_punches }} / 10
+
+                                </span>
+
+                            </td>
+
+
+
+                            <!-- ACTIONS -->
+
+                            <td class="customer-actions-cell">
+
+
+                                <a
+                                    href="{{ url_for('customer_profile', customer_id=customer.id) }}"
+                                    class="view-customer-btn">
+
+                                    View
+
+                                </a>
+
+
+                                {% if customer.current_punches < 10 %}
+
+                                <a
+                                    href="{{ url_for('record_visit', customer_id=customer.id) }}"
+                                    class="record-visit-btn">
+
+                                    + Visit
+
+                                </a>
+
+                                {% else %}
+
+                                <span class="cycle-complete-badge">
+
+                                    Complete
+
+                                </span>
+
+                                {% endif %}
+
+
+                            </td>
+
+
+                        </tr>
+
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            {% else %}
+
+
+            <div class="empty-customers">
+
+                <h3>
+                    No customers found
+                </h3>
+
+                <p>
+                    Try another search or register a new customer.
+                </p>
+
+            </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+    </main>
+
+</div>
+
+
+</body>
+
+</html>

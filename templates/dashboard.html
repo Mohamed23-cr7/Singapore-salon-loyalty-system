@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Singapore Salon</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body class="dashboard-body">
+
+    <!-- MOBILE HEADER -->
+<header class="mobile-header">
+
+    <div class="mobile-brand">
+        HS SINGAPORE
+        <span>SALON</span>
+    </div>
+
+    <button
+        type="button"
+        class="mobile-menu-btn"
+        id="mobileMenuBtn"
+        aria-label="Open navigation menu">
+
+        ☰
+
+    </button>
+
+</header>
+
+
+<div class="dashboard-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar" id="mobileSidebar">
+
+        <div class="sidebar-logo">
+
+            HS SINGAPORE
+
+            <span>SALON</span>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="{{ url_for('dashboard') }}"
+               class="active">
+
+                Dashboard
+
+            </a>
+
+
+            <a href="{{ url_for('customers') }}">
+
+                Customers
+
+            </a>
+
+
+            <a href="{{ url_for('add_customer') }}">
+
+                Add Customer
+
+            </a>
+
+            <a href="{{ url_for('scan_customer') }}">
+    Scan QR
+</a>
+
+
+            <a href="{{ url_for('record_visit_search') }}">
+    Record Visit
+</a>
+
+
+            <a href="{{ url_for('rewards') }}">
+
+                Rewards
+
+            </a>
+
+
+           {% if current_user.role == "admin" %}
+
+<a href="{{ url_for('staff_management') }}">
+    Staff Management
+</a>
+
+<a href="{{ url_for('audit_logs') }}">
+    Audit Logs
+</a>
+
+{% endif %}
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="logged-user">
+
+                <strong>
+                    {{ current_user.full_name }}
+                </strong>
+
+                <span>
+                    {{ current_user.role|capitalize }}
+                </span>
+
+            </div>
+
+
+            <a href="{{ url_for('logout') }}"
+               class="sidebar-logout">
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="dashboard-main">
+
+
+        <!-- HEADER -->
+
+        <div class="dashboard-header">
+
+            <div>
+
+                <p class="dashboard-small-title">
+                    LOYALTY MANAGEMENT
+                </p>
+
+                <h1>
+                    Dashboard
+                </h1>
+
+                <p>
+                    Welcome back, {{ current_user.full_name }}.
+                </p>
+
+            </div>
+
+
+            <a href="{{ url_for('add_customer') }}"
+               class="dashboard-add-btn"
+               style="text-decoration: none;">
+
+                + Add Customer
+
+            </a>
+
+        </div>
+
+
+
+        <!-- STATISTICS -->
+
+        <section class="stat-grid">
+
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    TOTAL CUSTOMERS
+                </span>
+
+                <strong>
+                    {{ total_customers }}
+                </strong>
+
+                <p>
+                    Loyalty members
+                </p>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    TOTAL VISITS
+                </span>
+
+                <strong>
+                    {{ total_visits }}
+                </strong>
+
+                <p>
+                    Recorded services
+                </p>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    AVAILABLE REWARDS
+                </span>
+
+                <strong>
+                    {{ available_rewards }}
+                </strong>
+
+                <p>
+                    Waiting for redemption
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- QUICK ACTIONS -->
+
+        <section class="dashboard-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="dashboard-small-title">
+                        RECEPTION
+                    </p>
+
+                    <h2>
+                        Quick Actions
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="quick-grid">
+
+
+                <!-- REGISTER CUSTOMER -->
+
+                <a href="{{ url_for('record_visit_search') }}"
+   class="quick-card">
+
+                    <div class="quick-icon">
+                        +
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Register Customer
+                        </h3>
+
+                        <p>
+                            Create a new loyalty membership.
+                        </p>
+
+                    </div>
+
+                </a>
+
+
+
+                <!-- RECORD VISIT -->
+
+                <a href="{{ url_for('customers') }}"
+                   class="quick-card">
+
+                    <div class="quick-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Record Visit
+                        </h3>
+
+                        <p>
+                            Select a customer and add the next loyalty punch.
+                        </p>
+
+                    </div>
+
+                </a>
+
+
+
+                <!-- FIND CUSTOMER -->
+
+                <a href="{{ url_for('customers') }}"
+                   class="quick-card">
+
+                    <div class="quick-icon">
+                        ⌕
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Find Customer
+                        </h3>
+
+                        <p>
+                            Search using name, phone or loyalty number.
+                        </p>
+
+                    </div>
+
+                </a>
+
+
+
+                <!-- REWARDS -->
+
+                <a href="{{ url_for('rewards') }}"
+                   class="quick-card">
+
+                    <div class="quick-icon">
+                        ★
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Rewards
+                        </h3>
+
+                        <p>
+                            View and redeem customer rewards.
+                        </p>
+
+                    </div>
+
+                </a>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- LOYALTY RULE -->
+
+        <section class="loyalty-rule-box">
+
+            <div>
+
+                <p class="dashboard-small-title">
+                    LOYALTY PROGRAM
+                </p>
+
+                <h2>
+                    Singapore Salon Rewards
+                </h2>
+
+            </div>
+
+
+            <div class="rule-items">
+
+
+                <div class="rule-item">
+
+                    <strong>
+                        5
+                    </strong>
+
+                    <span>
+                        5th Visit
+                    </span>
+
+                    <p>
+                        25% Discount
+                    </p>
+
+                </div>
+
+
+                <div class="rule-divider"></div>
+
+
+                <div class="rule-item">
+
+                    <strong>
+                        10
+                    </strong>
+
+                    <span>
+                        10th Visit
+                    </span>
+
+                    <p>
+                        Free Facial
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+</body>
+
+</html>
