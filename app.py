@@ -2,6 +2,8 @@ from flask_wtf.csrf import CSRFProtect
 import io
 import qrcode
 import uuid
+import os
+import requests
 
 from flask import Flask, render_template, redirect, url_for, request, flash, send_file
 from flask_login import (
@@ -60,6 +62,116 @@ def add_audit_log(action, details=""):
     )
 
     db.session.add(log)
+
+
+# -----------------------------
+# WHATSAPP PHONE HELPER
+# -----------------------------
+
+def format_whatsapp_phone(phone):
+
+    phone = (phone or "").strip()
+
+    # Keep digits only, while allowing Sri Lankan local/international formats.
+    digits = "".join(character for character in phone if character.isdigit())
+
+    if digits.startswith("0"):
+        return "94" + digits[1:]
+
+    if digits.startswith("94"):
+        return digits
+
+    return digits
+
+    # =========================================
+# SMS HELPER
+# =========================================
+
+def format_sms_phone(phone):
+
+    phone = (phone or "").strip()
+
+    digits = "".join(
+        character
+        for character in phone
+        if character.isdigit()
+    )
+
+    if digits.startswith("0"):
+        return "94" + digits[1:]
+
+    if digits.startswith("94"):
+        return digits
+
+    return digits
+
+
+def send_sms(phone, message):
+
+    api_token = os.getenv("TEXTLK_API_TOKEN")
+    sender_id = os.getenv(
+        "TEXTLK_SENDER_ID",
+        "TextLKDemo"
+    )
+
+    if not api_token:
+        print("SMS skipped: TEXTLK_API_TOKEN is missing.")
+        return False
+
+
+    recipient = format_sms_phone(phone)
+
+
+    payload = {
+        "recipient": recipient,
+        "sender_id": sender_id,
+        "type": "plain",
+        "message": message
+    }
+
+
+    headers = {
+        "Authorization": f"Bearer {api_token}",
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    }
+
+
+    try:
+
+        response = requests.post(
+            "https://app.text.lk/api/v3/sms/send",
+            json=payload,
+            headers=headers,
+            timeout=10
+        )
+
+        if response.ok:
+
+            print(
+                f"SMS sent successfully to {recipient}"
+            )
+
+            return True
+
+
+        print(
+            "SMS failed:",
+            response.status_code,
+            response.text
+        )
+
+        return False
+
+
+    except requests.RequestException as error:
+
+        print(
+            "SMS connection error:",
+            error
+        )
+
+        return False
 
 # =========================================
 # HOME
@@ -372,11 +484,40 @@ def customer_profile(customer_id):
         Reward.earned_at.desc()
     ).all()
 
+    # Customer's public loyalty-card link.
+    loyalty_url = url_for(
+        "public_loyalty_card",
+        qr_token=customer.qr_token,
+        _external=True
+    )
+
+    # Normal WhatsApp destination used by the permanent
+    # "WhatsApp Loyalty Card" button.
+    whatsapp_phone = format_whatsapp_phone(
+        customer.phone
+    )
+
+    # These values are supplied only immediately after
+    # a successful visit has been recorded.
+    visit_whatsapp_phone = request.args.get(
+        "whatsapp_phone",
+        ""
+    )
+
+    visit_whatsapp_message = request.args.get(
+        "whatsapp_message",
+        ""
+    )
+
     return render_template(
         "customer_profile.html",
         customer=customer,
         visits=visits,
-        rewards=rewards
+        rewards=rewards,
+        loyalty_url=loyalty_url,
+        whatsapp_phone=whatsapp_phone,
+        visit_whatsapp_phone=visit_whatsapp_phone,
+        visit_whatsapp_message=visit_whatsapp_message
     )
 
 
@@ -397,6 +538,7 @@ def record_visit(customer_id):
     )
 
     if request.method == "POST":
+
         service_name = request.form.get(
             "service_name",
             ""
@@ -407,7 +549,13 @@ def record_visit(customer_id):
             ""
         ).strip()
 
+
+        # =====================================
+        # REQUIRED FIELD VALIDATION
+        # =====================================
+
         if not service_name or not price_raw:
+
             flash(
                 "Service name and price are required.",
                 "danger"
@@ -420,9 +568,16 @@ def record_visit(customer_id):
                 )
             )
 
+
+        # =====================================
+        # PRICE VALIDATION
+        # =====================================
+
         try:
             original_price = float(price_raw)
+
         except ValueError:
+
             flash(
                 "Please enter a valid price.",
                 "danger"
@@ -435,20 +590,8 @@ def record_visit(customer_id):
                 )
             )
 
+
         if original_price <= 0:
-
-            if original_price > 1000000:
-                flash(
-                    "Service price is too large. Please check the amount.",
-                    "danger"
-            )
-            return redirect(
-                url_for(
-                   "record_visit",
-                    customer_id=customer.id
-                )
-    )
-
 
             flash(
                 "Price must be greater than zero.",
@@ -462,7 +605,28 @@ def record_visit(customer_id):
                 )
             )
 
+
+        if original_price > 1000000:
+
+            flash(
+                "Service price is too large. Please check the amount.",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "record_visit",
+                    customer_id=customer.id
+                )
+            )
+
+
+        # =====================================
+        # LOYALTY CYCLE VALIDATION
+        # =====================================
+
         if customer.current_punches >= 10:
+
             flash(
                 "This loyalty cycle already has 10 visits.",
                 "danger"
@@ -475,14 +639,29 @@ def record_visit(customer_id):
                 )
             )
 
+
+        # =====================================
+        # CALCULATE VISIT
+        # =====================================
+
         next_punch = customer.current_punches + 1
+
         discount_percent = 0
+
         final_price = original_price
 
-        # 5th visit = 25% discount
+
+        # Visit 5 = 25% discount.
         if next_punch == 5:
+
             discount_percent = 25
+
             final_price = original_price * 0.75
+
+
+        # =====================================
+        # CREATE VISIT
+        # =====================================
 
         visit = Visit(
             customer_id=customer.id,
@@ -495,10 +674,16 @@ def record_visit(customer_id):
         )
 
         db.session.add(visit)
+
         customer.current_punches = next_punch
 
-        # 10th visit = free facial reward
+
+        # =====================================
+        # VISIT 10 REWARD
+        # =====================================
+
         if next_punch == 10:
+
             reward = Reward(
                 customer_id=customer.id,
                 reward_type="Free Facial",
@@ -507,42 +692,124 @@ def record_visit(customer_id):
 
             db.session.add(reward)
 
-            add_audit_log(
-               "Visit Recorded",
-               (
-                   f"Customer: {customer.full_name}, "
-                   f"Visit: {next_punch}, "
-                   f"Service: {service_name}, "
-                   f"Final Price: LKR {final_price:.2f}"
-    )
-)
+
+        # =====================================
+        # AUDIT LOG
+        # =====================================
+
+        add_audit_log(
+            "Visit Recorded",
+            (
+                f"Customer: {customer.full_name}, "
+                f"Visit: {next_punch}, "
+                f"Service: {service_name}, "
+                f"Final Price: LKR {final_price:.2f}"
+            )
+        )
+
 
         db.session.commit()
 
+
+        # =====================================
+        # FLASH MESSAGE
+        # =====================================
+
         if next_punch == 5:
+
             flash(
                 "Visit recorded successfully. 25% discount applied.",
                 "success"
             )
 
         elif next_punch == 10:
+
             flash(
                 "10th visit completed! Free Facial reward is now available.",
                 "success"
             )
 
         else:
+
             flash(
                 f"Visit {next_punch} recorded successfully.",
                 "success"
             )
 
+
+        # =====================================
+        # THANK-YOU WHATSAPP MESSAGE
+        # =====================================
+
+        loyalty_url = url_for(
+            "public_loyalty_card",
+            qr_token=customer.qr_token,
+            _external=True
+        )
+
+        whatsapp_phone = format_whatsapp_phone(
+            customer.phone
+        )
+
+
+        if next_punch == 5:
+
+            whatsapp_message = (
+                f"Thank you for visiting HS Singapore Salon, "
+                f"{customer.full_name}!\n\n"
+                f"Visit {next_punch} of 10 has been recorded successfully.\n\n"
+                f"Your 25% loyalty discount has been applied.\n\n"
+                f"Next reward:\n"
+                f"Visit 10 - FREE FACIAL\n\n"
+                f"View your digital loyalty card:\n"
+                f"{loyalty_url}\n\n"
+                f"Thank you for choosing HS Singapore Salon."
+            )
+
+
+        elif next_punch == 10:
+
+            whatsapp_message = (
+                f"Congratulations, {customer.full_name}!\n\n"
+                f"You have completed Visit 10 at HS Singapore Salon.\n\n"
+                f"Your FREE FACIAL reward is now available.\n\n"
+                f"View your digital loyalty card:\n"
+                f"{loyalty_url}\n\n"
+                f"Thank you for being a valued loyalty member."
+            )
+
+
+        else:
+
+            if next_punch < 5:
+                next_reward = "Visit 5 - 25% OFF"
+            else:
+                next_reward = "Visit 10 - FREE FACIAL"
+
+            whatsapp_message = (
+                f"Thank you for visiting HS Singapore Salon, "
+                f"{customer.full_name}!\n\n"
+                f"Your loyalty visit has been recorded successfully.\n\n"
+                f"Progress: {next_punch} / 10 Visits\n\n"
+                f"Next reward:\n"
+                f"{next_reward}\n\n"
+                f"View your digital loyalty card:\n"
+                f"{loyalty_url}\n\n"
+                f"We look forward to seeing you again!"
+            )
+
+
+        # PRG pattern: redirect after POST so refreshing the profile
+        # cannot submit the same visit again.
         return redirect(
             url_for(
                 "customer_profile",
-                customer_id=customer.id
+                customer_id=customer.id,
+                whatsapp_phone=whatsapp_phone,
+                whatsapp_message=whatsapp_message
             )
         )
+
 
     return render_template(
         "record_visit.html",
@@ -711,7 +978,7 @@ def customer_qr(customer_id):
     "public_loyalty_card",
     qr_token=customer.qr_token,
     _external=True
-)
+    )
 
     qr = qrcode.QRCode(
         version=1,
@@ -1050,6 +1317,24 @@ def internal_server_error(error):
         "500.html"
     ), 500
 
+@app.route("/test-sms")
+@login_required
+def test_sms():
+
+    message = (
+        "HS Singapore Salon: "
+        "This is a test loyalty system SMS."
+    )
+
+    success = send_sms(
+        "0724008359",
+        message
+    )
+
+    if success:
+        return "SMS sent successfully."
+
+    return "SMS failed. Check terminal/API settings."
 
 # =========================================
 # RUN APPLICATION

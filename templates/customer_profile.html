@@ -24,13 +24,33 @@
 
 <body class="dashboard-body">
 
+<!-- MOBILE HEADER -->
+<header class="mobile-header">
+
+    <div class="mobile-brand">
+        <img
+            src="{{ url_for('static', filename='images/hs_logo.png') }}"
+            alt="HS Singapore Salon">
+    </div>
+
+    <button
+        type="button"
+        class="mobile-menu-btn"
+        id="mobileMenuBtn"
+        aria-label="Open navigation menu">
+        ☰
+    </button>
+
+</header>
+
+
 
 <div class="dashboard-layout">
 
 
     <!-- SIDEBAR -->
 
-    <aside class="sidebar">
+    <aside class="sidebar" id="mobileSidebar">
 
        <div class="sidebar-logo">
 
@@ -56,19 +76,27 @@
                 Add Customer
             </a>
 
-            {% if customer.current_punches < 10 %}
-            <a href="{{ url_for('record_visit', customer_id=customer.id) }}">
+            <a href="{{ url_for('scan_customer') }}">
+                Scan QR
+            </a>
+
+            <a href="{{ url_for('record_visit_search') }}">
                 Record Visit
             </a>
-            {% else %}
-            <a href="#">
-                Record Visit
-            </a>
-            {% endif %}
 
             <a href="{{ url_for('rewards') }}">
-    Rewards
-</a>
+                Rewards
+            </a>
+
+            {% if current_user.role == "admin" %}
+            <a href="{{ url_for('staff_management') }}">
+                Staff Management
+            </a>
+
+            <a href="{{ url_for('audit_logs') }}">
+                Audit Logs
+            </a>
+            {% endif %}
 
         </nav>
 
@@ -334,8 +362,7 @@
 
     </a>
 
-
-    {% else %}
+{% else %}
 
     <form
         method="POST"
@@ -353,7 +380,7 @@
         <input
     type="hidden"
     name="csrf_token"
-    value="{{ csrf_token() }}">
+    value="{{ csrf_token() }}"> 
 
     </form>
 
@@ -370,6 +397,103 @@
 
 
 </div>
+
+
+<!-- =====================================
+     CUSTOMER LOYALTY CARD SHARING
+===================================== -->
+
+<section class="loyalty-share-card">
+
+    <p class="dashboard-small-title">
+        CUSTOMER CARD
+    </p>
+
+    <h2>
+        Share Loyalty Card
+    </h2>
+
+    <p class="share-description">
+        Send or provide this customer's digital loyalty card.
+    </p>
+
+
+    <div class="share-actions">
+
+
+        <!-- WHATSAPP -->
+
+        <a
+            href="https://wa.me/{{ whatsapp_phone }}?text={{ (
+                'Welcome to HS Singapore Salon, ' ~
+                customer.full_name ~ '!%0A%0A' ~
+                'Your loyalty membership has been created successfully.%0A%0A' ~
+                'Loyalty No: ' ~ customer.loyalty_number ~ '%0A%0A' ~
+                'Your Digital Loyalty Card:%0A' ~ loyalty_url ~ '%0A%0A' ~
+                'Rewards:%0A' ~
+                '5th Visit - 25% OFF%0A' ~
+                '10th Visit - FREE FACIAL%0A%0A' ~
+                'Please keep this link for your next visit.%0A%0A' ~
+                'Thank you for choosing HS Singapore Salon.'
+            ) }}"
+            target="_blank"
+            class="share-btn whatsapp-share-btn">
+
+            WhatsApp Loyalty Card
+
+        </a>
+
+
+        <!-- COPY LINK -->
+
+        <button
+            type="button"
+            class="share-btn copy-link-btn"
+            onclick="copyLoyaltyLink()">
+
+            Copy Loyalty Link
+
+        </button>
+
+
+        <!-- PRINT CARD -->
+
+        <button
+            type="button"
+            class="share-btn print-card-btn"
+            onclick="printLoyaltyCard()">
+
+            Print Loyalty Card
+
+        </button>
+
+    </div>
+
+
+    <!-- LINK DISPLAY -->
+
+    <div class="loyalty-link-box">
+
+        <span>
+            Customer Loyalty Link
+        </span>
+
+        <input
+            type="text"
+            id="loyaltyLink"
+            value="{{ loyalty_url }}"
+            readonly>
+
+    </div>
+
+
+    <p
+        id="copyMessage"
+        class="copy-message">
+    </p>
+
+</section>
+
 
 
 
@@ -656,6 +780,110 @@
 
 </div>
 
+
+
+<!-- MOBILE MENU + LOYALTY SHARE SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const menuButton = document.getElementById("mobileMenuBtn");
+    const sidebar = document.getElementById("mobileSidebar");
+
+    if (menuButton && sidebar) {
+
+        menuButton.addEventListener("click", function () {
+
+            sidebar.classList.toggle("mobile-open");
+
+            const isOpen = sidebar.classList.contains("mobile-open");
+
+            menuButton.textContent = isOpen ? "✕" : "☰";
+            menuButton.setAttribute(
+                "aria-label",
+                isOpen ? "Close navigation menu" : "Open navigation menu"
+            );
+
+        });
+
+        sidebar.querySelectorAll(".sidebar-nav a").forEach(function (link) {
+
+            link.addEventListener("click", function () {
+
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.remove("mobile-open");
+                    menuButton.textContent = "☰";
+                    menuButton.setAttribute(
+                        "aria-label",
+                        "Open navigation menu"
+                    );
+                }
+
+            });
+
+        });
+
+    }
+
+});
+
+
+function copyLoyaltyLink() {
+
+    const loyaltyLink = document.getElementById("loyaltyLink");
+    const copyMessage = document.getElementById("copyMessage");
+
+    if (!loyaltyLink || !copyMessage) {
+        return;
+    }
+
+    const showSuccess = function () {
+        copyMessage.textContent = "Loyalty link copied successfully.";
+        setTimeout(function () {
+            copyMessage.textContent = "";
+        }, 3000);
+    };
+
+    if (navigator.clipboard && window.isSecureContext) {
+
+        navigator.clipboard.writeText(loyaltyLink.value)
+            .then(showSuccess)
+            .catch(function () {
+                fallbackCopy(loyaltyLink, copyMessage);
+            });
+
+    } else {
+
+        fallbackCopy(loyaltyLink, copyMessage);
+
+    }
+
+}
+
+
+function fallbackCopy(loyaltyLink, copyMessage) {
+
+    loyaltyLink.focus();
+    loyaltyLink.select();
+    loyaltyLink.setSelectionRange(0, 99999);
+
+    try {
+        document.execCommand("copy");
+        copyMessage.textContent = "Loyalty link copied successfully.";
+    } catch (error) {
+        copyMessage.textContent = "Please copy the loyalty link manually.";
+    }
+
+    setTimeout(function () {
+        copyMessage.textContent = "";
+    }, 3000);
+
+}
+
+
+function printLoyaltyCard() {
+    window.print();
+}
+</script>
 
 </body>
 

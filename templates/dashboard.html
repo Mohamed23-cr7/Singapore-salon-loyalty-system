@@ -274,7 +274,7 @@
 
                 <!-- REGISTER CUSTOMER -->
 
-                <a href="{{ url_for('record_visit_search') }}"
+                <a href="{{ url_for('add_customer') }}"
    class="quick-card">
 
                     <div class="quick-icon">
@@ -299,8 +299,8 @@
 
                 <!-- RECORD VISIT -->
 
-                <a href="{{ url_for('customers') }}"
-                   class="quick-card">
+                <a href="{{ url_for('record_visit_search') }}"
+   class="quick-card">
 
                     <div class="quick-icon">
                         ✓
@@ -443,6 +443,55 @@
 
 </div>
 
+<!-- MOBILE MENU SCRIPT -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const menuButton = document.getElementById("mobileMenuBtn");
+    const sidebar = document.getElementById("mobileSidebar");
+
+    if (menuButton && sidebar) {
+
+        menuButton.addEventListener("click", function () {
+
+            sidebar.classList.toggle("mobile-open");
+
+            if (sidebar.classList.contains("mobile-open")) {
+                menuButton.textContent = "✕";
+                menuButton.setAttribute("aria-label", "Close navigation menu");
+            } else {
+                menuButton.textContent = "☰";
+                menuButton.setAttribute("aria-label", "Open navigation menu");
+            }
+
+        });
+
+
+        /* Close menu after selecting a navigation item */
+
+        const navigationLinks =
+            sidebar.querySelectorAll(".sidebar-nav a");
+
+        navigationLinks.forEach(function (link) {
+
+            link.addEventListener("click", function () {
+
+                if (window.innerWidth <= 768) {
+
+                    sidebar.classList.remove("mobile-open");
+                    menuButton.textContent = "☰";
+
+                }
+
+            });
+
+        });
+
+    }
+
+});
+</script>
 
 </body>
 

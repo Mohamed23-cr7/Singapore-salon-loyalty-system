@@ -3893,113 +3893,282 @@ body.login-body .login-security-note span {
 
 
 /* ========================================================================
-   7. MOBILE DRAWER
-   Requires .mobile-header and .sidebar.mobile-open in the HTML/JS.
+   7. FINAL MOBILE DRAWER
 ======================================================================== */
 
 @media (max-width: 768px) {
 
+    /* =========================
+       MOBILE HEADER
+    ========================= */
+
     .mobile-header {
-        display: flex;
+        display: flex !important;
 
         position: sticky;
         top: 0;
+        left: 0;
 
-        z-index: 2200;
+        z-index: 5000;
 
         width: 100%;
-        min-height: 64px;
+        height: 68px;
 
         align-items: center;
         justify-content: space-between;
 
-        padding: 8px 14px;
+        padding: 8px 16px;
 
-        background: rgba(4, 4, 4, 0.96);
+        background: #050505;
 
-        border-bottom: 1px solid rgba(212, 175, 85, 0.32);
+        border-bottom: 1px solid rgba(212, 175, 85, 0.40);
+    }
+
+
+    /* MOBILE LOGO */
+
+    .mobile-brand {
+        display: flex;
+        align-items: center;
     }
 
     .mobile-brand img {
         display: block;
 
-        width: 48px;
-        height: 48px;
+        width: 52px !important;
+        height: 52px !important;
+
+        max-width: 52px !important;
 
         object-fit: contain;
 
         border-radius: 50%;
     }
 
+
+    /* =========================
+       HAMBURGER BUTTON
+    ========================= */
+
     .mobile-menu-btn {
-        width: 42px;
-        height: 42px;
+        display: flex !important;
 
-        border: 1px solid #4d3c18;
-        border-radius: 7px;
+        width: 46px;
+        height: 46px;
 
-        background: #0d0d0d;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0;
+
+        border: 1px solid #806624;
+        border-radius: 9px;
+
+        background: #101010;
 
         color: #d4af55;
 
-        font-size: 20px;
+        font-size: 24px;
+        line-height: 1;
+
+        cursor: pointer;
+
+        z-index: 5100;
     }
+
+
+    .mobile-menu-btn:hover {
+        background: #17130b;
+        border-color: #d4af55;
+    }
+
+
+    /* =========================
+       SIDEBAR - CLOSED
+    ========================= */
 
     .dashboard-layout > .sidebar {
-        display: none;
+        display: flex !important;
 
-        position: fixed;
-        top: 64px;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        position: fixed !important;
 
-        z-index: 2100;
+        top: 68px !important;
+        left: 0 !important;
+        bottom: 0 !important;
 
-        width: 100%;
-        height: calc(100vh - 64px);
+        z-index: 4900;
 
-        padding: 14px 16px 18px;
+        width: 270px !important;
+        height: calc(100vh - 68px) !important;
 
-        background: rgba(5, 5, 5, 0.99);
+        flex-direction: column !important;
 
-        border-right: 0;
-        border-top: 1px solid #242424;
+        padding: 18px 14px !important;
+
+        background: #050505 !important;
+
+        border-right: 1px solid rgba(212, 175, 85, 0.45);
+
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        transform: translateX(-100%);
+
+        transition: transform 0.28s ease;
     }
+
+
+    /* =========================
+       SIDEBAR - OPEN
+    ========================= */
 
     .dashboard-layout > .sidebar.mobile-open {
-        display: flex;
+        transform: translateX(0) !important;
     }
+
+
+    /* Hide duplicate desktop logo */
 
     .dashboard-layout > .sidebar .sidebar-logo {
-        display: none;
+        display: none !important;
     }
 
+
+    /* =========================
+       MOBILE NAVIGATION
+    ========================= */
+
     .dashboard-layout > .sidebar .sidebar-nav {
+        display: flex !important;
+
+        flex: 1;
+
+        flex-direction: column !important;
+
         width: 100%;
 
-        margin-top: 0;
+        margin: 0 !important;
+        padding: 0;
 
         overflow-y: auto;
     }
 
-    .dashboard-layout > .sidebar .sidebar-nav a {
-        width: 100%;
-        min-height: 43px;
 
-        margin-bottom: 4px;
-        padding: 11px 13px;
+    .dashboard-layout > .sidebar .sidebar-nav a {
+        display: flex !important;
+
+        width: 100%;
+
+        min-height: 44px;
+
+        align-items: center;
+
+        margin: 0 0 5px !important;
+
+        padding: 12px 14px !important;
+
+        color: #bbbbbb;
+
+        text-decoration: none;
+
+        border-left: 3px solid transparent;
+        border-radius: 7px;
 
         font-size: 13px;
+
+        white-space: normal !important;
     }
 
-    .dashboard-layout > .dashboard-main {
+
+    .dashboard-layout > .sidebar .sidebar-nav a:hover {
+        color: #d4af55;
+
+        background: rgba(212, 175, 85, 0.08);
+    }
+
+
+    .dashboard-layout > .sidebar .sidebar-nav a.active {
+        color: #d4af55;
+
+        background: #17130b;
+
+        border-left-color: #d4af55;
+    }
+
+
+    /* =========================
+       USER / LOGOUT
+    ========================= */
+
+    .dashboard-layout > .sidebar .sidebar-bottom {
+        display: block;
+
         width: 100%;
 
-        margin-left: 0;
+        margin-top: auto !important;
 
-        padding: 22px 14px 38px;
+        padding-top: 15px;
+
+        border-top: 1px solid #292929;
     }
+
+
+    .dashboard-layout > .sidebar .logged-user strong {
+        display: block;
+
+        color: #ffffff;
+
+        font-size: 12px;
+    }
+
+
+    .dashboard-layout > .sidebar .logged-user span {
+        display: block;
+
+        margin-top: 4px;
+
+        color: #d4af55;
+
+        font-size: 10px;
+    }
+
+
+    .dashboard-layout > .sidebar .sidebar-logout {
+        display: block;
+
+        margin-top: 12px;
+
+        color: #bbbbbb;
+
+        font-size: 12px;
+
+        text-decoration: none;
+    }
+
+
+    /* =========================
+       MAIN CONTENT
+    ========================= */
+
+    .dashboard-layout {
+        display: block !important;
+
+        width: 100%;
+    }
+
+
+    .dashboard-layout > .dashboard-main {
+        width: 100% !important;
+
+        margin-left: 0 !important;
+
+        padding: 22px 16px 40px !important;
+    }
+
+
+    /* =========================
+       HOME PAGE
+    ========================= */
 
     body.home-body .home-navbar {
         position: relative;
@@ -4011,10 +4180,12 @@ body.login-body .login-security-note span {
         padding: 10px 14px;
     }
 
+
     body.home-body .home-logo {
         width: 58px;
         height: 58px;
     }
+
 
     body.home-body .home-nav {
         width: 100%;
@@ -4022,6 +4193,7 @@ body.login-body .login-security-note span {
         justify-content: center;
         flex-wrap: wrap;
     }
+
 
     body.home-body .home-nav a {
         min-height: 36px;
@@ -4031,11 +4203,13 @@ body.login-body .login-security-note span {
         font-size: 11px;
     }
 
+
     body.home-body .home-hero {
         min-height: auto;
 
         padding: 24px 12px 34px;
     }
+
 
     body.home-body .hero-content.glass-panel {
         width: 100%;
@@ -4045,14 +4219,21 @@ body.login-body .login-security-note span {
         border-radius: 17px;
     }
 
+
     body.home-body .rewards {
         grid-template-columns: 1fr;
     }
+
+
+    /* =========================
+       LOGIN PAGE
+    ========================= */
 
     body.login-body,
     body.home-body {
         background-attachment: scroll;
     }
+
 
     body.login-body .premium-login-card {
         width: min(100%, 390px);
@@ -4062,16 +4243,18 @@ body.login-body .login-security-note span {
         border-radius: 17px;
     }
 
+
     body.login-body .login-logo {
         width: 82px;
         height: 82px;
     }
 
+
     body.login-body .premium-login-card h1 {
         font-size: 28px;
     }
-}
 
+}
 
 /* ========================================================================
    8. SMALL MOBILE
@@ -4122,5 +4305,737 @@ body.login-body .login-security-note span {
         width: 95px;
         height: 95px;
         max-width: 98px;
+    }
+}
+
+/* =========================================================
+   SHARE LOYALTY CARD
+========================================================= */
+
+.loyalty-share-card {
+    margin-top: 28px;
+    margin-bottom: 35px;
+    padding: 26px 28px;
+
+    background: linear-gradient(
+        135deg,
+        #111111,
+        #0a0a0a
+    );
+
+    border: 1px solid #3b321f;
+    border-radius: 12px;
+}
+
+
+.loyalty-share-card h2 {
+    margin: 4px 0 7px;
+
+    color: #ffffff;
+
+    font-family: Georgia, serif;
+    font-size: 27px;
+}
+
+
+.share-description {
+    margin: 0 0 20px;
+
+    color: #8f8f8f;
+
+    font-size: 13px;
+}
+
+
+/* BUTTON CONTAINER */
+
+.share-actions {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+}
+
+
+/* ALL SHARE BUTTONS */
+
+.share-btn {
+    display: inline-flex;
+
+    min-height: 43px;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 18px;
+
+    border-radius: 7px;
+
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+/* WHATSAPP */
+
+.whatsapp-share-btn {
+    border: 1px solid #238c4b;
+
+    background: #176b39;
+
+    color: #ffffff;
+}
+
+.whatsapp-share-btn:hover {
+    background: #218c4d;
+
+    color: #ffffff;
+}
+
+
+/* COPY */
+
+.copy-link-btn {
+    border: 1px solid #5a4822;
+
+    background: #151515;
+
+    color: #dcb957;
+}
+
+.copy-link-btn:hover {
+    border-color: #dcb957;
+
+    background: #1d1a12;
+}
+
+
+/* PRINT */
+
+.print-card-btn {
+    border: 1px solid #dcb957;
+
+    background: #dcb957;
+
+    color: #080808;
+}
+
+.print-card-btn:hover {
+    background: #edca6a;
+}
+
+
+/* LINK AREA */
+
+.loyalty-link-box {
+    width: 100%;
+}
+
+
+.loyalty-link-box span {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #a2a2a2;
+
+    font-size: 11px;
+
+    letter-spacing: 0.7px;
+}
+
+
+.loyalty-link-box input {
+    box-sizing: border-box;
+
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid #323232;
+    border-radius: 7px;
+
+    outline: none;
+
+    background: #070707;
+
+    color: #dcb957;
+
+    font-size: 12px;
+}
+
+
+.loyalty-link-box input:focus {
+    border-color: #dcb957;
+}
+
+
+.copy-message {
+    min-height: 16px;
+
+    margin: 8px 0 0;
+
+    color: #75d69a;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   SHARE CARD - MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .loyalty-share-card {
+        padding: 20px 16px;
+    }
+
+    .loyalty-share-card h2 {
+        font-size: 23px;
+    }
+
+    .share-actions {
+        flex-direction: column;
+    }
+
+    .share-btn {
+        box-sizing: border-box;
+
+        width: 100%;
+    }
+
+}
+/* =========================================================
+   PHYSICAL LOYALTY CARD
+========================================================= */
+
+.physical-loyalty-card {
+    max-width: 620px;
+
+    margin: 30px 0;
+
+    padding: 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #12100b,
+            #080808
+        );
+
+    border: 2px solid #b68d2f;
+    border-radius: 14px;
+
+    color: #ffffff;
+}
+
+
+.physical-card-header {
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    padding-bottom: 16px;
+
+    border-bottom: 1px solid #302718;
+}
+
+
+.physical-card-logo {
+    width: 72px;
+    height: 72px;
+
+    object-fit: contain;
+
+    border-radius: 50%;
+}
+
+
+.physical-card-small-title {
+    margin: 0 0 4px;
+
+    color: #d4af55;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+}
+
+
+.physical-card-header h2 {
+    margin: 0;
+
+    font-family: Georgia, serif;
+
+    font-size: 24px;
+}
+
+
+.physical-card-body {
+    display: grid;
+
+    grid-template-columns: 1fr 150px;
+
+    gap: 22px;
+
+    align-items: center;
+
+    padding: 22px 0;
+}
+
+
+.physical-card-customer {
+    display: grid;
+
+    gap: 6px;
+}
+
+
+.physical-card-customer span {
+    margin-top: 8px;
+
+    color: #888888;
+
+    font-size: 10px;
+}
+
+
+.physical-card-customer strong {
+    font-size: 14px;
+}
+
+
+.physical-card-qr {
+    text-align: center;
+}
+
+
+.physical-card-qr img {
+    width: 125px;
+    height: 125px;
+
+    padding: 8px;
+
+    background: white;
+
+    border-radius: 8px;
+}
+
+
+.physical-card-qr p {
+    margin-top: 7px;
+
+    color: #888888;
+
+    font-size: 10px;
+}
+
+
+.physical-card-rewards {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    padding-top: 16px;
+
+    border-top: 1px solid #302718;
+}
+
+
+.physical-card-rewards div {
+    padding: 13px;
+
+    text-align: center;
+
+    background: #0e0e0e;
+
+    border: 1px solid #4c3b1c;
+    border-radius: 8px;
+}
+
+
+.physical-card-rewards strong {
+    display: block;
+
+    color: #d4af55;
+
+    font-size: 13px;
+}
+
+
+.physical-card-rewards span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #ffffff;
+
+    font-size: 12px;
+}
+
+
+.physical-card-footer {
+    margin: 18px 0 0;
+
+    color: #777777;
+
+    font-size: 10px;
+
+    text-align: center;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .physical-loyalty-card {
+        padding: 18px;
+    }
+
+
+    .physical-card-body {
+        grid-template-columns: 1fr;
+
+        text-align: center;
+    }
+
+
+    .physical-card-customer {
+        text-align: left;
+    }
+
+
+    .physical-card-rewards {
+        grid-template-columns: 1fr;
+    }
+
+}
+/* =========================================================
+   PRINT ONLY THE PHYSICAL LOYALTY CARD
+========================================================= */
+
+@media print {
+
+    body.printing-loyalty-card * {
+        visibility: hidden !important;
+    }
+
+
+    body.printing-loyalty-card
+    #printableLoyaltyCard,
+    body.printing-loyalty-card
+    #printableLoyaltyCard * {
+
+        visibility: visible !important;
+    }
+
+
+    body.printing-loyalty-card
+    #printableLoyaltyCard {
+
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        width: 100%;
+
+        max-width: 650px;
+
+        margin: 0;
+
+        background: white !important;
+
+        color: black !important;
+
+        border: 2px solid #9c7828 !important;
+
+        box-shadow: none !important;
+    }
+
+
+    body.printing-loyalty-card
+    .physical-card-header h2,
+    body.printing-loyalty-card
+    .physical-card-customer strong,
+    body.printing-loyalty-card
+    .physical-card-rewards span {
+
+        color: black !important;
+    }
+
+}
+/* =========================================================
+   FINAL PRINT - ONE PAGE LOYALTY CARD ONLY
+========================================================= */
+
+@media print {
+
+    @page {
+        size: A4 portrait;
+        margin: 10mm;
+    }
+
+
+    html,
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+
+        width: 100% !important;
+        height: auto !important;
+
+        background: #ffffff !important;
+
+        overflow: visible !important;
+    }
+
+
+    /* Hide mobile header */
+
+    body.printing-loyalty-card .mobile-header {
+        display: none !important;
+    }
+
+
+    /* Hide sidebar completely */
+
+    body.printing-loyalty-card .sidebar {
+        display: none !important;
+    }
+
+
+    /* Reset dashboard structure */
+
+    body.printing-loyalty-card .dashboard-layout {
+        display: block !important;
+
+        width: 100% !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+
+    body.printing-loyalty-card .dashboard-main {
+        display: block !important;
+
+        width: 100% !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+
+    /*
+       Hide every direct section inside dashboard-main
+    */
+
+    body.printing-loyalty-card .dashboard-main > * {
+        display: none !important;
+    }
+
+
+    /*
+       Show ONLY printable loyalty card
+    */
+
+    body.printing-loyalty-card
+    .dashboard-main
+    > #printableLoyaltyCard {
+
+        display: block !important;
+
+        box-sizing: border-box !important;
+
+        width: 170mm !important;
+        max-width: 170mm !important;
+
+        min-height: 0 !important;
+        height: auto !important;
+
+        margin: 5mm auto 0 !important;
+        padding: 8mm !important;
+
+        background: #ffffff !important;
+
+        border: 1.5px solid #a77d22 !important;
+        border-radius: 8px !important;
+
+        color: #000000 !important;
+
+        box-shadow: none !important;
+
+        page-break-before: avoid !important;
+        page-break-after: avoid !important;
+        page-break-inside: avoid !important;
+
+        break-before: avoid !important;
+        break-after: avoid !important;
+        break-inside: avoid !important;
+    }
+
+
+    /* Keep all card children visible */
+
+    body.printing-loyalty-card
+    #printableLoyaltyCard * {
+
+        display: revert;
+
+        visibility: visible !important;
+    }
+
+
+    /* Header */
+
+    body.printing-loyalty-card
+    .physical-card-header {
+
+        display: flex !important;
+
+        align-items: center !important;
+
+        gap: 16px !important;
+    }
+
+
+    /* Card body */
+
+    body.printing-loyalty-card
+    .physical-card-body {
+
+        display: grid !important;
+
+        grid-template-columns:
+            1fr
+            150px !important;
+
+        gap: 22px !important;
+    }
+
+
+    /* Customer details */
+
+    body.printing-loyalty-card
+    .physical-card-customer {
+
+        display: grid !important;
+    }
+
+
+    /* Rewards */
+
+    body.printing-loyalty-card
+    .physical-card-rewards {
+
+        display: grid !important;
+
+        grid-template-columns:
+            1fr
+            1fr !important;
+    }
+
+
+    /* QR */
+
+    body.printing-loyalty-card
+    .physical-card-qr img {
+
+        width: 125px !important;
+        height: 125px !important;
+
+        background: #ffffff !important;
+    }
+
+
+    /* Print colours */
+
+    body.printing-loyalty-card
+    .physical-card-header h2,
+
+    body.printing-loyalty-card
+    .physical-card-customer strong,
+
+    body.printing-loyalty-card
+    .physical-card-rewards span {
+
+        color: #000000 !important;
+    }
+
+
+    body.printing-loyalty-card
+    .physical-card-small-title,
+
+    body.printing-loyalty-card
+    .gold-text,
+
+    body.printing-loyalty-card
+    .physical-card-rewards strong {
+
+        color: #8b6818 !important;
+    }
+
+}
+/* =========================================================
+   STEP 3 - VISIT THANK-YOU WHATSAPP CARD
+   Append this to the bottom of static/css/style.css
+========================================================= */
+
+.visit-thankyou-card {
+    margin: 24px 0 30px;
+    padding: 22px 24px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #101610,
+            #090909
+        );
+
+    border: 1px solid #285d38;
+    border-radius: 10px;
+}
+
+.visit-thankyou-card h2 {
+    margin: 4px 0 8px;
+
+    color: #ffffff;
+
+    font-family: Georgia, serif;
+    font-size: 24px;
+}
+
+.visit-thankyou-card p:not(.dashboard-small-title) {
+    margin: 0 0 16px;
+
+    color: #999999;
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+
+    .visit-thankyou-card {
+        padding: 20px 16px;
+    }
+
+    .visit-thankyou-card .share-btn {
+        width: 100%;
     }
 }

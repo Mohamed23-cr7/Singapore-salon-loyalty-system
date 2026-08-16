@@ -22,10 +22,36 @@
 
 <body class="dashboard-body">
 
+    <!-- MOBILE HEADER -->
+
+<header class="mobile-header">
+
+    <div class="mobile-brand">
+
+        <img
+            src="{{ url_for('static', filename='images/hs_logo.png') }}"
+            alt="HS Singapore Salon">
+
+    </div>
+
+    <button
+        type="button"
+        class="mobile-menu-btn"
+        id="mobileMenuBtn"
+        aria-label="Open navigation menu">
+
+        ☰
+
+    </button>
+
+</header>
+
 <div class="dashboard-layout">
 
 
-    <aside class="sidebar">
+    <aside class="sidebar" id="mobileSidebar">
+
+
 
         <div class="sidebar-logo">
 
@@ -297,6 +323,71 @@
     </main>
 
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const menuButton =
+        document.getElementById("mobileMenuBtn");
+
+    const sidebar =
+        document.getElementById("mobileSidebar");
+
+
+    if (menuButton && sidebar) {
+
+        menuButton.addEventListener("click", function () {
+
+            sidebar.classList.toggle("mobile-open");
+
+
+            if (sidebar.classList.contains("mobile-open")) {
+
+                menuButton.textContent = "✕";
+
+                menuButton.setAttribute(
+                    "aria-label",
+                    "Close navigation menu"
+                );
+
+            } else {
+
+                menuButton.textContent = "☰";
+
+                menuButton.setAttribute(
+                    "aria-label",
+                    "Open navigation menu"
+                );
+
+            }
+
+        });
+
+
+        const navigationLinks =
+            sidebar.querySelectorAll(".sidebar-nav a");
+
+
+        navigationLinks.forEach(function (link) {
+
+            link.addEventListener("click", function () {
+
+                if (window.innerWidth <= 768) {
+
+                    sidebar.classList.remove("mobile-open");
+
+                    menuButton.textContent = "☰";
+
+                }
+
+            });
+
+        });
+
+    }
+
+});
+</script>
 
 </body>
 
