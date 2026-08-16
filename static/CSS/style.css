@@ -5039,3 +5039,743 @@ body.login-body .login-security-note span {
         width: 100%;
     }
 }
+/* =========================================================
+   HS SINGAPORE SALON HOME TITLE
+========================================================= */
+
+.salon-main-title {
+    margin: 14px auto 12px;
+
+    max-width: 900px;
+
+    color: #e0b94f;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(44px, 5vw, 68px);
+    font-weight: 700;
+
+    line-height: 0.98;
+
+    letter-spacing: -1px;
+
+    text-align: center;
+    text-transform: uppercase;
+}
+
+
+.salon-main-title span {
+    display: block;
+
+    margin-top: 12px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 0.42em;
+    font-weight: 600;
+
+    letter-spacing: 7px;
+
+    color: #d8b65a;
+}
+
+
+.loyalty-main-subtitle {
+    margin-top: 18px;
+
+    color: #ffffff;
+
+    font-size: 27px;
+    font-weight: 500;
+
+    text-align: center;
+}
+
+
+/* TABLET */
+
+@media (max-width: 768px) {
+
+    .salon-main-title {
+        font-size: 44px;
+
+        line-height: 1;
+    }
+
+    .salon-main-title span {
+        font-size: 0.44em;
+
+        letter-spacing: 5px;
+    }
+
+    .loyalty-main-subtitle {
+        font-size: 23px;
+    }
+}
+
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+
+    .salon-main-title {
+        font-size: 34px;
+
+        line-height: 1.04;
+
+        letter-spacing: -0.4px;
+    }
+
+    .salon-main-title span {
+        margin-top: 9px;
+
+        font-size: 0.46em;
+
+        letter-spacing: 4px;
+    }
+
+    .loyalty-main-subtitle {
+        margin-top: 15px;
+
+        font-size: 20px;
+    }
+}
+/* =========================================================
+   HOME PAGE - FIT FULL DESKTOP SCREEN
+========================================================= */
+
+@media (min-width: 769px) {
+
+    body.home-body {
+        height: 100vh;
+        min-height: 100vh;
+        overflow: hidden;
+    }
+
+    body.home-body .home-navbar {
+        height: 88px;
+        min-height: 88px;
+        padding: 7px 5%;
+    }
+
+    body.home-body .home-logo {
+        width: 72px;
+        height: 72px;
+    }
+
+    body.home-body .home-hero {
+        height: calc(100vh - 88px);
+        min-height: 0;
+
+        padding: 8px 20px 12px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    body.home-body .hero-content.glass-panel {
+        width: min(760px, 100%);
+        max-height: calc(100vh - 108px);
+
+        padding: 22px 40px 18px;
+
+        border-radius: 20px;
+    }
+
+    body.home-body .small-title {
+        margin: 0 0 8px;
+
+        font-size: 11px;
+        letter-spacing: 5px;
+    }
+
+    body.home-body .salon-main-title {
+        margin: 4px auto 5px;
+
+        font-size: clamp(42px, 4.2vw, 58px);
+        line-height: 0.92;
+    }
+
+    body.home-body .salon-main-title span {
+        margin-top: 8px;
+
+        font-size: 0.38em;
+        letter-spacing: 7px;
+    }
+
+    body.home-body .loyalty-main-subtitle {
+        margin: 10px 0 0;
+
+        font-size: 25px;
+    }
+
+    body.home-body .description {
+        max-width: 680px;
+
+        margin: 14px auto 18px;
+
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    body.home-body .rewards {
+        gap: 16px;
+        margin-top: 0;
+    }
+
+    body.home-body .reward-card {
+        min-height: 108px;
+
+        padding: 17px 18px;
+    }
+
+    body.home-body .reward-number {
+        font-size: 34px;
+        line-height: 1;
+    }
+
+    body.home-body .reward-card h3 {
+        margin: 3px 0 6px;
+        font-size: 15px;
+    }
+
+    body.home-body .reward-card p {
+        margin: 0;
+        font-size: 12px;
+    }
+
+    body.home-body .hero-actions {
+        margin-top: 16px;
+    }
+
+    body.home-body .primary-btn {
+        min-height: 42px;
+
+        padding: 10px 34px;
+    }
+
+    body.home-body .home-footer-note {
+        margin: 10px 0 0;
+
+        font-size: 10px;
+    }
+}
+/* =========================================================
+   FINAL MASTER HOME PAGE
+   HS SINGAPORE SALON (PVT) LTD
+   KEEP THIS AT THE VERY END OF style.css
+========================================================= */
+
+
+/* =========================================================
+   DESKTOP / LAPTOP
+========================================================= */
+
+@media (min-width: 769px) {
+
+    body.home-body {
+        width: 100%;
+        height: 100vh;
+        min-height: 100vh;
+
+        margin: 0;
+
+        overflow: hidden;
+
+        background-position: center center;
+        background-size: cover;
+    }
+
+
+    /* =========================
+       NAVBAR
+    ========================= */
+
+    body.home-body .home-navbar {
+        width: 100%;
+
+        height: 88px !important;
+        min-height: 88px !important;
+
+        padding: 7px 5% !important;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        background: rgba(4, 4, 4, 0.97);
+
+        border-bottom: 1px solid rgba(212, 175, 85, 0.35);
+    }
+
+
+    body.home-body .home-logo {
+        width: 68px !important;
+        height: 68px !important;
+
+        object-fit: contain;
+    }
+
+
+    body.home-body .home-nav {
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+    }
+
+
+    body.home-body .home-nav a {
+        margin-left: 0;
+
+        font-size: 12px;
+    }
+
+
+    /* =========================
+       HERO AREA
+    ========================= */
+
+    body.home-body .home-hero {
+        width: 100%;
+
+        height: calc(100vh - 88px) !important;
+        min-height: 0 !important;
+
+        padding: 12px 20px !important;
+
+        display: flex !important;
+
+        align-items: center !important;
+        justify-content: center !important;
+
+        overflow: hidden;
+    }
+
+
+    /* =========================
+       GLASS PANEL
+    ========================= */
+
+    body.home-body .hero-content.glass-panel {
+        width: min(760px, 92%) !important;
+
+        max-width: 760px !important;
+        max-height: none !important;
+
+        margin: 0 auto !important;
+
+        padding: 18px 38px 15px !important;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(17, 13, 7, 0.96),
+                rgba(5, 5, 5, 0.95)
+            );
+
+        border: 1px solid rgba(212, 175, 85, 0.45);
+
+        border-radius: 18px;
+
+        box-shadow:
+            0 18px 55px rgba(0, 0, 0, 0.55);
+
+        text-align: center;
+    }
+
+
+    /* =========================
+       SMALL TOP TITLE
+    ========================= */
+
+    body.home-body .small-title {
+        display: block !important;
+
+        margin: 0 0 7px !important;
+
+        color: #d4af55;
+
+        font-size: 9px !important;
+
+        font-weight: 600;
+
+        letter-spacing: 5px !important;
+    }
+
+
+    /* =========================
+       MAIN BUSINESS NAME
+    ========================= */
+
+    body.home-body .salon-main-title {
+        display: block !important;
+
+        width: 100%;
+
+        max-width: none !important;
+
+        margin: 0 auto !important;
+
+        color: #e0b94f;
+
+        font-family: Georgia, "Times New Roman", serif;
+
+        font-size: 46px !important;
+
+        font-weight: 700;
+
+        line-height: 0.98 !important;
+
+        letter-spacing: -0.8px !important;
+
+        white-space: nowrap !important;
+
+        text-align: center;
+
+        text-transform: uppercase;
+    }
+
+
+    /* (PVT) LTD */
+
+    body.home-body .salon-main-title span {
+        display: block !important;
+
+        margin-top: 8px !important;
+
+        color: #d8b65a;
+
+        font-family: Arial, sans-serif;
+
+        font-size: 17px !important;
+
+        font-weight: 600;
+
+        line-height: 1.2;
+
+        letter-spacing: 7px !important;
+
+        white-space: normal !important;
+    }
+
+
+    /* =========================
+       LOYALTY HEADING
+    ========================= */
+
+    body.home-body .loyalty-main-subtitle {
+        margin: 10px 0 0 !important;
+
+        color: #ffffff;
+
+        font-size: 23px !important;
+
+        font-weight: 500;
+
+        line-height: 1.2;
+    }
+
+
+    /* =========================
+       DESCRIPTION
+    ========================= */
+
+    body.home-body .description {
+        max-width: 650px !important;
+
+        margin: 13px auto 16px !important;
+
+        color: #cccccc;
+
+        font-size: 12px !important;
+
+        line-height: 1.45 !important;
+    }
+
+
+    /* =========================
+       REWARD CARDS
+    ========================= */
+
+    body.home-body .rewards {
+        display: grid !important;
+
+        grid-template-columns: 1fr 1fr !important;
+
+        gap: 15px !important;
+
+        width: 100%;
+
+        margin: 0 !important;
+    }
+
+
+    body.home-body .reward-card {
+        width: 100% !important;
+
+        min-height: 105px !important;
+
+        padding: 15px 16px !important;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        background:
+            linear-gradient(
+                145deg,
+                #111111,
+                #090909
+            );
+
+        border: 1px solid rgba(212, 175, 85, 0.55);
+
+        border-radius: 10px;
+    }
+
+
+    body.home-body .reward-number {
+        color: #e0b94f;
+
+        font-size: 32px !important;
+
+        line-height: 1 !important;
+    }
+
+
+    body.home-body .reward-card h3 {
+        margin: 2px 0 5px !important;
+
+        font-size: 14px !important;
+    }
+
+
+    body.home-body .reward-card p {
+        margin: 0 !important;
+
+        color: #bbbbbb;
+
+        font-size: 11px !important;
+    }
+
+
+    /* =========================
+       STAFF LOGIN
+    ========================= */
+
+    body.home-body .hero-actions {
+        margin-top: 14px !important;
+    }
+
+
+    body.home-body .primary-btn {
+        min-width: 170px;
+
+        min-height: 40px !important;
+
+        padding: 10px 28px !important;
+
+        display: inline-flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 7px;
+
+        font-size: 14px;
+
+        font-weight: 700;
+
+        box-shadow:
+            0 8px 24px rgba(212, 175, 85, 0.18);
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    body.home-body .home-footer-note {
+        margin: 8px 0 0 !important;
+
+        color: rgba(255, 255, 255, 0.48);
+
+        font-size: 8px !important;
+
+        letter-spacing: 2px;
+
+        line-height: 1.2;
+
+        text-transform: uppercase;
+    }
+
+}
+
+
+/* =========================================================
+   SHORT LAPTOP SCREENS
+========================================================= */
+
+@media (min-width: 769px) and (max-height: 700px) {
+
+    body.home-body .home-navbar {
+        height: 78px !important;
+        min-height: 78px !important;
+    }
+
+    body.home-body .home-logo {
+        width: 58px !important;
+        height: 58px !important;
+    }
+
+    body.home-body .home-hero {
+        height: calc(100vh - 78px) !important;
+
+        padding: 8px 15px !important;
+    }
+
+    body.home-body .hero-content.glass-panel {
+        padding: 14px 34px 12px !important;
+    }
+
+    body.home-body .salon-main-title {
+        font-size: 41px !important;
+    }
+
+    body.home-body .salon-main-title span {
+        margin-top: 6px !important;
+
+        font-size: 15px !important;
+    }
+
+    body.home-body .loyalty-main-subtitle {
+        margin-top: 7px !important;
+
+        font-size: 21px !important;
+    }
+
+    body.home-body .description {
+        margin: 10px auto 12px !important;
+
+        font-size: 11px !important;
+    }
+
+    body.home-body .reward-card {
+        min-height: 92px !important;
+
+        padding: 12px !important;
+    }
+
+    body.home-body .reward-number {
+        font-size: 29px !important;
+    }
+
+    body.home-body .hero-actions {
+        margin-top: 10px !important;
+    }
+
+    body.home-body .home-footer-note {
+        margin-top: 6px !important;
+    }
+}
+
+
+/* =========================================================
+   TABLET / MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    body.home-body {
+        height: auto !important;
+        min-height: 100vh;
+
+        overflow-y: auto !important;
+        overflow-x: hidden;
+    }
+
+
+    body.home-body .home-hero {
+        height: auto !important;
+        min-height: auto !important;
+
+        padding: 20px 12px 30px !important;
+
+        overflow: visible !important;
+    }
+
+
+    body.home-body .hero-content.glass-panel {
+        width: 100% !important;
+
+        margin: 0 auto !important;
+
+        padding: 24px 18px !important;
+    }
+
+
+    body.home-body .salon-main-title {
+        font-size: 36px !important;
+
+        line-height: 1 !important;
+
+        white-space: normal !important;
+    }
+
+
+    body.home-body .salon-main-title span {
+        margin-top: 8px !important;
+
+        font-size: 16px !important;
+
+        letter-spacing: 5px !important;
+    }
+
+
+    body.home-body .loyalty-main-subtitle {
+        margin-top: 12px !important;
+
+        font-size: 21px !important;
+    }
+
+
+    body.home-body .description {
+        margin: 14px auto 18px !important;
+    }
+
+
+    body.home-body .rewards {
+        grid-template-columns: 1fr !important;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+    body.home-body .salon-main-title {
+        font-size: 30px !important;
+    }
+
+
+    body.home-body .salon-main-title span {
+        font-size: 14px !important;
+
+        letter-spacing: 4px !important;
+    }
+
+
+    body.home-body .loyalty-main-subtitle {
+        font-size: 19px !important;
+    }
+
+}

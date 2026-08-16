@@ -8,12 +8,14 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Singapore Salon | Loyalty Rewards</title>
+    <title>
+        HS Singapore Salon (Pvt) Ltd | Loyalty Rewards
+    </title>
 
     <!-- Browser Tab Logo -->
     <link rel="icon"
-          type="image/jpeg"
-          href="{{ url_for('static', filename='images/hs_logo.jpg') }}">
+          type="image/png"
+          href="{{ url_for('static', filename='images/hs_logo.png') }}">
 
     <!-- Main CSS -->
     <link rel="stylesheet"
@@ -36,7 +38,7 @@
 
             <img
                 src="{{ url_for('static', filename='images/hs_logo.png') }}"
-                alt="HS Singapore Salon"
+                alt="HS Singapore Salon (Pvt) Ltd"
                 class="home-logo">
 
         </a>
@@ -89,16 +91,22 @@
             </p>
 
 
-            <!-- MAIN TITLE -->
+            <!-- MAIN COMPANY TITLE -->
 
-            <h1>
+            <h1 class="salon-main-title">
 
-                Singapore Salon
+                HS SINGAPORE SALON
+
+                <span>
+                    (PVT) LTD
+                </span>
 
             </h1>
 
 
-            <h2>
+            <!-- LOYALTY TITLE -->
+
+            <h2 class="loyalty-main-subtitle">
 
                 Exclusive Loyalty Rewards
 
@@ -196,7 +204,7 @@
 
             <p class="home-footer-note">
 
-                Singapore Salon Loyalty Program
+                HS Singapore Salon (Pvt) Ltd Loyalty Program
 
             </p>
 
