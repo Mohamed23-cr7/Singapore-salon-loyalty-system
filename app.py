@@ -45,9 +45,32 @@ login_manager.login_message_category = "warning"
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, int(user_id))
-def admin_required():
-    return current_user.is_authenticated and current_user.role == "admin"
+@login_manager.user_loader
+def load_user(user_id):
+    return db.session.get(User, int(user_id))
 
+
+# =========================================
+# LOGIN SECURITY
+# =========================================
+
+@login_manager.unauthorized_handler
+def unauthorized():
+
+    flash(
+        "Please sign in with an authorized salon staff account.",
+        "warning"
+    )
+
+    return redirect(
+        url_for("login")
+    )
+
+
+def admin_required():
+    return current_user.is_authenticated and current_user.role == "admin"    
+
+    
 
 # -----------------------------
 # AUDIT LOG HELPER
